@@ -1,6 +1,26 @@
-body
-  padding: 50px
-  font: 10px "Lucida Grande", Helvetica, Arial, sans-serif
+$primary-color: #484c55
+$primary-font: FontAwesome, Helvetica, sans-serif
 
-a
-  color: #00B7FF
+@font-face
+  font-family: 'FontAwesome'
+  src: url('fonts/fontawesome-webfont.woff2') format('woff2')
+  src: url('fonts/fontawesome-webfont.woff') format('woff')
+  src: url('fonts/fontawesome-webfont.ttf') format('truetype')
+
+body
+  color: $primary-color
+  font-family: $primary-font
+
+.header
+  height: 100px
+  background: #0095FF /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(rgba(16,19,20,0.29), #0095FF) /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(rgba(16,19,20,0.29), #0095FF) /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(rgba(16,19,20,0.29), #0095FF) /* For Firefox 3.6 to 15 */
+  background: linear-gradient(rgba(16,19,20,0.29), #0095FF) /* Standard syntax */
+  #logo
+    position: relative
+    float: left
+    margin-left: 10%
+    margin-top: 10px
+    height: 50px
