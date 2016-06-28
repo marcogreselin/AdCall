@@ -4,6 +4,6 @@
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 .DS_Store
-.idea
+.idea/
 node_modules/
 
