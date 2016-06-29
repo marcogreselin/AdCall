@@ -4,9 +4,6 @@
   src: url("fonts/fontawesome-webfont.woff") format("woff");
   src: url("fonts/fontawesome-webfont.ttf") format("truetype"); }
 
-html, body {
-  height: 100%; }
-
 body {
   background: linear-gradient(#0075a9, #880A6C) fixed;
   color: #ffffff;
@@ -62,8 +59,12 @@ main {
   margin-top: 30px;
   padding-top: 30px;
   padding-bottom: 30px;
-  background-color: rgba(255, 255, 255, 0.2);
-  flex: 1; }
+  background-color: rgba(255, 255, 255, 0.2); }
+
+.home {
+  align-items: center; }
+  .home img {
+    width: 80%; }
 
 footer {
   margin-top: 20px;
