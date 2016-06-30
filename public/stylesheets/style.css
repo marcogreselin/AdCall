@@ -1,8 +1,6 @@
 @font-face {
   font-family: 'FontAwesome';
-  src: url("fonts/fontawesome-webfont.woff2") format("woff2");
-  src: url("fonts/fontawesome-webfont.woff") format("woff");
-  src: url("fonts/fontawesome-webfont.ttf") format("truetype"); }
+  src: url("fonts/Asap-Regular.otf") format("opentype"); }
 
 body {
   background: linear-gradient(#0075a9, #880A6C) fixed;
@@ -19,6 +17,14 @@ a:hover {
   text-decoration: none;
   padding-bottom: 2px;
   border-bottom: 2px solid; }
+
+img {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none; }
 
 nav {
   margin-top: 3rem;
@@ -70,6 +76,47 @@ footer {
   margin-top: 20px;
   margin-bottom: 20px;
   color: rgba(255, 255, 255, 0.7);
-  font-size: 12px; }
+  font-size: 12px;
+  text-align: left !important; }
+
+.login-page {
+  font-size: 1.5rem;
+  padding: 20px;
+  text-align: center; }
+  .login-page main {
+    border-radius: 3px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-top: 30px;
+    padding-bottom: 30px; }
+  .login-page p {
+    display: block; }
+  .login-page input {
+    border: 3px solid white;
+    border-radius: 4px;
+    color: black;
+    margin-left: 10px;
+    padding-left: 8px; }
+  .login-page button {
+    border: 3px solid white;
+    border-radius: 4px;
+    color: white;
+    background-color: transparent;
+    transition: background-color 0.1s ease; }
+  .login-page button:hover {
+    background-color: white;
+    color: #000; }
+  .login-page a {
+    border: none; }
+  .login-page img {
+    height: 100px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
 
 /*# sourceMappingURL=style.css.map */

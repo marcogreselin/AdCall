@@ -4,9 +4,9 @@ $primary-font: FontAwesome, Helvetica, sans-serif
 
 @font-face
   font-family: 'FontAwesome'
-  src: url('fonts/fontawesome-webfont.woff2') format('woff2')
-  src: url('fonts/fontawesome-webfont.woff') format('woff')
-  src: url('fonts/fontawesome-webfont.ttf') format('truetype')
+  src: url('fonts/Asap-Regular.otf') format('opentype')
+  //src: url('fonts/fontawesome-webfont.woff') format('woff')
+  //src: url('fonts/fontawesome-webfont.ttf') format('truetype')
 
 html, body
   //height: 100%
@@ -25,6 +25,13 @@ a:hover
   text-decoration: none
   padding-bottom: 2px
   border-bottom: 2px solid
+img
+  user-drag: none
+  user-select: none
+  -moz-user-select: none
+  -webkit-user-drag: none
+  -webkit-user-select: none
+  -ms-user-select: none
 nav
   margin-top: 3rem
   height: 70px
@@ -69,7 +76,6 @@ main
   img
     width: 80%
 
-#login-page
 
 
 footer
@@ -77,3 +83,43 @@ footer
   margin-bottom: 20px
   color: rgba(255,255,255,.7)
   font-size: 12px
+  text-align: left!important
+.login-page
+  font-size: 1.5rem
+  padding: 20px
+  text-align: center
+  main
+    border-radius: 3px
+    max-width: 500px
+    margin-left: auto
+    margin-right: auto
+    padding-left: 70px
+    padding-right: 70px
+    padding-top: 30px
+    padding-bottom: 30px
+  p
+    display: block
+  input
+    border: 3px solid white
+    border-radius: 4px
+    color: black
+    margin-left: 10px
+    padding-left: 8px
+  button
+    border: 3px solid white
+    border-radius: 4px
+    color: white
+    background-color: transparent
+    transition: background-color 0.1s ease
+  button:hover
+    background-color: white
+    color: #000
+  a
+    border: none
+  img
+    height: 100px
+    margin-top: 60px
+    margin-bottom: 60px
+    display: block
+    margin-left: auto
+    margin-right: auto
