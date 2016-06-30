@@ -4,9 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-
+var basicAuth = require('basic-auth');
 var routes = require('./routes/index');
+
 // var users = require('./routes/users');
 
 var app = express();
@@ -15,20 +15,48 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// favicon
 app.use(favicon(path.join(__dirname, 'public','images', 'favicon.ico')));
 
+// app password protection
+var auth = function (req, res, next) {
+  function unauthorized(res) {
+    res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+    return res.send(401);
+  };
+
+  var user = basicAuth(req);
+
+  if (!user || !user.name || !user.pass) {
+    return unauthorized(res);
+  };
+
+  if (user.name === 'adcall' && user.pass === 'adcall') {
+    return next();
+  } else {
+    return unauthorized(res);
+  };
+};
+app.use(auth);
+
+// various stuff
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// sass compiler
 app.use(require('node-sass-middleware')({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
   indentedSyntax: true,
   sourceMap: true
 }));
-app.use(express.static(path.join(__dirname, 'public')));
 
+// serve static files
+app.use(express.static(path.join(__dirname, 'public'), { defaultExtension: 'html' }));
+
+// serve routes
 app.use('/', routes);
 // app.use('/users', users);
 
@@ -63,6 +91,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
 module.exports = app;
-
