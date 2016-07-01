@@ -109,8 +109,6 @@ footer {
   .login-page button:hover {
     background-color: white;
     color: #000; }
-  .login-page a {
-    border: none; }
   .login-page img {
     height: 70px;
     margin-top: 60px;
@@ -125,5 +123,47 @@ footer {
   border-radius: 4px;
   color: black;
   margin-left: 10px; }
+
+.registration-page {
+  font-size: 1.2rem;
+  padding: 20px;
+  text-align: center; }
+  .registration-page main {
+    border-radius: 3px;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px; }
+  .registration-page .row {
+    margin: 5px;
+    display: flex;
+    align-items: center; }
+  .registration-page .col-md-4 {
+    padding: 0px; }
+  .registration-page input {
+    border: 3px solid white;
+    border-radius: 4px;
+    color: black;
+    width: 100%; }
+  .registration-page button {
+    border: 3px solid white;
+    border-radius: 4px;
+    color: white;
+    background-color: transparent;
+    transition: background-color 0.1s ease;
+    margin-top: 20px; }
+  .registration-page button:hover {
+    background-color: white;
+    color: #000; }
+  .registration-page img {
+    height: 70px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
 
 /*# sourceMappingURL=style.css.map */

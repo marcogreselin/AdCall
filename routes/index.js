@@ -15,4 +15,13 @@ router.route('/signup')
   res.render('signup', {type: req.type});
 })
 
+// GET login page.
+router.get('/signup/advertiser', function(req, res, next) {
+  res.render('signup-advertiser');
+});
+
+// GET login page.
+router.get('/signup/publisher', function(req, res, next) {
+  res.render('signup-publisher');
+});
 module.exports = router;
