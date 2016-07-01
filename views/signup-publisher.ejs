@@ -6,37 +6,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Sign Up</title>
+    <title>Publishers Sign Up</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
     <link rel="stylesheet" href="../stylesheets/style.css">
 </head>
-<body class="login-page">
+<body class="registration-page">
 <header>
     <div class="container">
         <a href="/" title="Take me home">
             <img class="logo" src="../images/logo.png">
         </a>
         <p>
-        <h1>Sign Up</h1>
+        <h1>Publishers Sign Up</h1>
         </p>
     </div>
 </header>
 
-<main class="signup-page">
+<main>
+    <div class="registration-mask">
+        <form>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">Company Name</div>
+                        <div class="col-md-8"><input type="text"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">Website</div>
+                        <div class="col-md-8"><input type="text"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">email address</div>
+                        <div class="col-md-8"><input type="text"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">Password</div>
+                        <div class="col-md-8"><input type="password"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">Address</div>
+                        <div class="col-md-8"><input type="text"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">Phone Number</div>
+                        <div class="col-md-8"><input type="text"></div>
+                    </div>
+                </div>
+            </div>
+            <button formaction="http://console.adcall.io">Sign Up!</button>
+        </form>
+    </div>
 
-    <form>
-        <div class="container login-page">
-            <p>What Account do you need:</p>
-            <p><select onChange="document.location = this.value">
-                <option value="" disabled selected>Make a choice</option>
-                <option value="signup/advertiser">Advertiser</option>
-                <option value="signup//publisher">Publisher</option>
-            </select></p>
-            <!--<button>Next</button>-->
-        </div>
-    </form>
 
 </main>
 
