@@ -3,17 +3,14 @@
   src: url("fonts/Asap-Regular.otf") format("opentype"); }
 
 body {
-  background: linear-gradient(#0075a9, #880A6C) fixed;
-  color: #ffffff;
+  background: linear-gradient(white, #FFFFE4) fixed;
+  color: black;
   font-family: FontAwesome, Helvetica, sans-serif;
   display: flex;
   flex-direction: column; }
 
 a {
   color: inherit; }
-
-a:after {
-  color: white; }
 
 a:hover {
   color: inherit;
@@ -47,7 +44,7 @@ nav {
     nav ul.left li {
       list-style: none;
       text-align: center;
-      color: #F2E278;
+      color: #50E3C2;
       display: inline-block;
       padding-left: 40px; }
   nav ul.right {
@@ -55,14 +52,14 @@ nav {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-    border: 1px solid #F2E278;
+    border: 1px solid #50E3C2;
     border-radius: 3px;
     padding: 10px;
     margin-bottom: 0px; }
     nav ul.right li {
       list-style: none;
       text-align: center;
-      color: #F2E278; }
+      color: #50E3C2; }
 
 main {
   margin-top: 30px;
@@ -169,4 +166,4 @@ footer {
     margin-left: auto;
     margin-right: auto; }
 
-/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style-loggedin.css.map */

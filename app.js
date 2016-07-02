@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var basicAuth = require('basic-auth');
 var routes = require('./routes/index');
-var consoleRoutes = require('./routes/console');
 
 // var users = require('./routes/users');
 
@@ -23,7 +22,7 @@ app.use(favicon(path.join(__dirname, 'public','images', 'favicon.ico')));
 var auth = function (req, res, next) {
   function unauthorized(res) {
     res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-    return res.send(401);
+    return res.sendStatus(401);
   };
 
   var user = basicAuth(req);
