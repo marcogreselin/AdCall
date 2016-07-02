@@ -24,4 +24,8 @@ router.get('/signup/advertiser', function(req, res, next) {
 router.get('/signup/publisher', function(req, res, next) {
   res.render('signup-publisher');
 });
+
+router.get('/console', function(req, res) {
+  res.send('Welcome to our API!');
+});
 module.exports = router;

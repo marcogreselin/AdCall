@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var basicAuth = require('basic-auth');
 var routes = require('./routes/index');
-var subdomain = require('express-subdomain');
 var consoleRoutes = require('./routes/console');
 
 // var users = require('./routes/users');
@@ -60,7 +59,6 @@ app.use(express.static(path.join(__dirname, 'public'), { defaultExtension: 'html
 
 // serve routes
 app.use('/', routes);
-app.use(subdomain('console',consoleRoutes));
 // app.use('/users', users);
 
 // catch 404 and forward to error handler
