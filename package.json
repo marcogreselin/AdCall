@@ -8,6 +8,7 @@
   "dependencies": {
     "basic-auth": "^1.0.4",
     "body-parser": "~1.15.1",
+    "chart.js": "^2.1.6",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "ejs": "~2.4.1",

@@ -1,12 +1,12 @@
 $primary-color: black
-$logo-color: #50E3C2
+$logo-color: #E6FFF9
 $primary-font: FontAwesome, Helvetica, sans-serif
 
 @font-face
   font-family: 'FontAwesome'
   src: url('fonts/Asap-Regular.otf') format('opentype')
 body
-  background: linear-gradient(white, #FFFFE4) fixed
+  background-color:  $logo-color
   color: $primary-color
   font-family: $primary-font
   display: flex
@@ -25,9 +25,12 @@ img
   -webkit-user-drag: none
   -webkit-user-select: none
   -ms-user-select: none
+header
+  background: linear-gradient(rgba(0,117,169,1), #880A6C)
 nav
   margin-top: 3rem
-  height: 70px
+  height: 100px
+  padding-bottom: 30px
   .logo
     position: relative
     height: 40px
@@ -74,94 +77,6 @@ main
 footer
   margin-top: 20px
   margin-bottom: 20px
-  color: rgba(255,255,255,.7)
+  color: $primary-color
   font-size: 12px
   text-align: left!important
-.login-page
-  font-size: 1.5rem
-  padding: 20px
-  text-align: center
-  main
-    border-radius: 3px
-    max-width: 500px
-    margin-left: auto
-    margin-right: auto
-    padding-left: 70px
-    padding-right: 70px
-    padding-top: 30px
-    padding-bottom: 30px
-  p
-    display: block
-  input
-    border: 3px solid white
-    border-radius: 4px
-    color: black
-    margin-left: 10px
-    padding-left: 8px
-  button
-    border: 3px solid white
-    border-radius: 4px
-    color: white
-    background-color: transparent
-    transition: background-color 0.1s ease
-  button:hover
-    background-color: white
-    color: #000
-  img
-    height: 70px
-    margin-top: 60px
-    margin-bottom: 60px
-    display: block
-    margin-left: auto
-    margin-right: auto
-.signup-page
-  select
-    background-color: white
-    border: 7px solid white
-    border-radius: 4px
-    color: black
-    margin-left: 10px
-.registration-page
-  font-size: 1.2rem
-  padding: 20px
-  text-align: center
-  main
-    border-radius: 3px
-    width: 800px
-    margin-left: auto
-    margin-right: auto
-    padding-left: 20px
-    padding-right: 20px
-    padding-top: 30px
-    padding-bottom: 30px
-  .row
-    margin: 5px
-    display: flex
-    align-items: center
-  .col-md-4
-    padding: 0px
-  input
-    border: 3px solid white
-    border-radius: 4px
-    color: black
-
-    //margin-left: 10px
-    //padding-left: 8px
-    width: 100%
-  button
-    border: 3px solid white
-    border-radius: 4px
-    color: white
-    background-color: transparent
-    transition: background-color 0.1s ease
-    margin-top: 20px
-  button:hover
-    background-color: white
-    color: #000
-  img
-    height: 70px
-    margin-top: 60px
-    margin-bottom: 60px
-    display: block
-    margin-left: auto
-    margin-right: auto

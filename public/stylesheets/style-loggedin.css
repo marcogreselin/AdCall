@@ -3,7 +3,7 @@
   src: url("fonts/Asap-Regular.otf") format("opentype"); }
 
 body {
-  background: linear-gradient(white, #FFFFE4) fixed;
+  background-color: #E6FFF9;
   color: black;
   font-family: FontAwesome, Helvetica, sans-serif;
   display: flex;
@@ -26,9 +26,13 @@ img {
   -webkit-user-select: none;
   -ms-user-select: none; }
 
+header {
+  background: linear-gradient(#0075a9, #880A6C); }
+
 nav {
   margin-top: 3rem;
-  height: 70px; }
+  height: 100px;
+  padding-bottom: 30px; }
   nav .logo {
     position: relative;
     height: 40px;
@@ -44,7 +48,7 @@ nav {
     nav ul.left li {
       list-style: none;
       text-align: center;
-      color: #50E3C2;
+      color: #E6FFF9;
       display: inline-block;
       padding-left: 40px; }
   nav ul.right {
@@ -52,14 +56,14 @@ nav {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-    border: 1px solid #50E3C2;
+    border: 1px solid #E6FFF9;
     border-radius: 3px;
     padding: 10px;
     margin-bottom: 0px; }
     nav ul.right li {
       list-style: none;
       text-align: center;
-      color: #50E3C2; }
+      color: #E6FFF9; }
 
 main {
   margin-top: 30px;
@@ -75,95 +79,8 @@ main {
 footer {
   margin-top: 20px;
   margin-bottom: 20px;
-  color: rgba(255, 255, 255, 0.7);
+  color: black;
   font-size: 12px;
   text-align: left !important; }
-
-.login-page {
-  font-size: 1.5rem;
-  padding: 20px;
-  text-align: center; }
-  .login-page main {
-    border-radius: 3px;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 70px;
-    padding-right: 70px;
-    padding-top: 30px;
-    padding-bottom: 30px; }
-  .login-page p {
-    display: block; }
-  .login-page input {
-    border: 3px solid white;
-    border-radius: 4px;
-    color: black;
-    margin-left: 10px;
-    padding-left: 8px; }
-  .login-page button {
-    border: 3px solid white;
-    border-radius: 4px;
-    color: white;
-    background-color: transparent;
-    transition: background-color 0.1s ease; }
-  .login-page button:hover {
-    background-color: white;
-    color: #000; }
-  .login-page img {
-    height: 70px;
-    margin-top: 60px;
-    margin-bottom: 60px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto; }
-
-.signup-page select {
-  background-color: white;
-  border: 7px solid white;
-  border-radius: 4px;
-  color: black;
-  margin-left: 10px; }
-
-.registration-page {
-  font-size: 1.2rem;
-  padding: 20px;
-  text-align: center; }
-  .registration-page main {
-    border-radius: 3px;
-    width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 30px;
-    padding-bottom: 30px; }
-  .registration-page .row {
-    margin: 5px;
-    display: flex;
-    align-items: center; }
-  .registration-page .col-md-4 {
-    padding: 0px; }
-  .registration-page input {
-    border: 3px solid white;
-    border-radius: 4px;
-    color: black;
-    width: 100%; }
-  .registration-page button {
-    border: 3px solid white;
-    border-radius: 4px;
-    color: white;
-    background-color: transparent;
-    transition: background-color 0.1s ease;
-    margin-top: 20px; }
-  .registration-page button:hover {
-    background-color: white;
-    color: #000; }
-  .registration-page img {
-    height: 70px;
-    margin-top: 60px;
-    margin-bottom: 60px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto; }
 
 /*# sourceMappingURL=style-loggedin.css.map */
