@@ -30,23 +30,24 @@ router.get('/console', function(req, res) {
   res.render('console/');
 });
 
-// console advertiser
-router.get('/console/create-ad', function(req, res) {
-  res.render('console/create-ad');
+router.get('/console/analytics', function(req, res) {
+  res.render('console/analytics');
 });
 
+// console advertiser
 router.get('/console/answer', function(req, res) {
-  res.render('console/create-ad');
+  res.render('console/answer');
 });
 
 router.get('/console/my-ads', function(req, res) {
-  res.render('console/create-ad');
+  res.render('console/my-ads');
 });
 
 
 // console publisher
-router.get('/console/my-snippet', function(req, res) {
-  res.render('console/create-ad');
+router.get('/console/snippet', function(req, res) {
+  res.render('console/snippet');
 });
+
 
 module.exports = router;
