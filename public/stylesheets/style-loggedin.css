@@ -93,4 +93,54 @@ footer {
   background: linear-gradient(#0075a9, #880A6C);
   color: white; }
 
+textarea#snippet {
+  display: block;
+  width: 500px;
+  height: 250px;
+  border: 1px solid #880A6C;
+  border-radius: 3px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  padding: 10px; }
+
+h1 {
+  margin-bottom: 40px; }
+
+.menu-box {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 10px;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 50px;
+  background: linear-gradient(#0075a9, #880A6C);
+  color: white; }
+
+.answer-video {
+  height: 400px; }
+
+video {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  height: 100%; }
+
+.center-container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  height: 100%; }
+
+table td {
+  padding: 5px; }
+
+table th {
+  padding: 5px;
+  background-color: rgba(0, 117, 169, 0.5);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px; }
+
 /*# sourceMappingURL=style-loggedin.css.map */
