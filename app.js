@@ -23,6 +23,7 @@ app.use(favicon(path.join(__dirname, 'public','images', 'favicon.ico')));
 app.use(function(req, res, next) {
   if(req.header['x-forwarded-proto'] != 'https') {
     res.redirect('https://' + req.get('host') + req.originalUrl);
+    console.log(req.get('host') + req.originalUrl);
   }
 });
 
