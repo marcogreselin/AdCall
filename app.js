@@ -102,5 +102,5 @@ redirect.use(function(req, res){
   res.redirect('console/');
 });
 
-app.use(vhost('console.adcall.herokuapp.com', redirect));
+app.use(vhost('console.adcall.io', redirect));
 module.exports = app;
