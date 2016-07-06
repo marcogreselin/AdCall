@@ -92,8 +92,17 @@ app.use(function(err, req, res, next) {
   });
 });
 
+// Redirect http requests from http://jaketrent.com/post/https-redirect-node-heroku/
+app.use(function(req, res, next) {
+  if(req.header['x-forwarded-proto'] != 'https') {
+    return res.redirect('https://' + req.get('Host') + req.url);
+  }
+  next();
+});
 
-// Redirect app
+
+
+// Redirect Consol app
 var redirect = express();
 
 redirect.use(function(req, res){
