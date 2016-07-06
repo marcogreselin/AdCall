@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var basicAuth = require('basic-auth');
 var routes = require('./routes/index');
+var vhost = require('vhost');
 
 // var users = require('./routes/users');
 
@@ -91,4 +92,15 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+// Redirect app
+
+var redirect = express();
+
+redirect.use(function(req, res){
+  if (!module.parent) console.log(req.vhost);
+  res.redirect('console/');
+});
+
+app.use(vhost('console.adcall.herokuapp.com', redirect));
 module.exports = app;
