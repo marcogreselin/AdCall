@@ -19,6 +19,14 @@ app.set('view engine', 'ejs');
 // favicon
 app.use(favicon(path.join(__dirname, 'public','images', 'favicon.ico')));
 
+// Redirect http requests from http://jaketrent.com/post/https-redirect-node-heroku/
+app.use(function(req, res, next) {
+  if(req.header['x-forwarded-proto'] != 'https') {
+    return res.redirect('https://' + req.get('Host') + req.url);
+  }
+  next();
+});
+
 // app password protection
 var auth = function (req, res, next) {
   function unauthorized(res) {
@@ -92,13 +100,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-// Redirect http requests from http://jaketrent.com/post/https-redirect-node-heroku/
-app.use(function(req, res, next) {
-  if(req.header['x-forwarded-proto'] != 'https') {
-    return res.redirect('https://' + req.get('Host') + req.url);
-  }
-  next();
-});
+
 
 
 
