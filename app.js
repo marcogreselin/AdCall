@@ -94,12 +94,11 @@ app.use(function(err, req, res, next) {
 
 
 // Redirect app
-
 var redirect = express();
 
 redirect.use(function(req, res){
   if (!module.parent) console.log(req.vhost);
-  res.redirect('www.nyt.com');
+  res.redirect('http://www.nyt.com');
 });
 
 app.use(vhost('console.adcall.io', redirect));
