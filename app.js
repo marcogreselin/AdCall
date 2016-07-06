@@ -19,26 +19,26 @@ app.set('view engine', 'ejs');
 // favicon
 app.use(favicon(path.join(__dirname, 'public','images', 'favicon.ico')));
 
-// app password protection
-var auth = function (req, res, next) {
-  function unauthorized(res) {
-    res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-    return res.sendStatus(401);
-  };
-
-  var user = basicAuth(req);
-
-  if (!user || !user.name || !user.pass) {
-    return unauthorized(res);
-  };
-
-  if (user.name === 'adcall' && user.pass === 'adcall') {
-    return next();
-  } else {
-    return unauthorized(res);
-  };
-};
-app.use(auth);
+// // app password protection
+// var auth = function (req, res, next) {
+//   function unauthorized(res) {
+//     res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+//     return res.sendStatus(401);
+//   };
+//
+//   var user = basicAuth(req);
+//
+//   if (!user || !user.name || !user.pass) {
+//     return unauthorized(res);
+//   };
+//
+//   if (user.name === 'adcall' && user.pass === 'adcall') {
+//     return next();
+//   } else {
+//     return unauthorized(res);
+//   };
+// };
+// app.use(auth);
 
 // various stuff
 app.use(logger('dev'));
