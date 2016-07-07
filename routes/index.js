@@ -2,8 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-  console.log(JSON.stringify(req.headers));
-  res.render('index');
+  if(req.headers['x-forwarded-proto'] === 'https') {
+    res.render('index');
+  } else {
+    res.redirect('https://adcall.io');
+  }
 });
 
 // GET login page.
