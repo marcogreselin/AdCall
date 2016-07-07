@@ -25,7 +25,7 @@ app.use(favicon(path.join(__dirname, 'public','images', 'favicon.ico')));
 app.use(function(req, res, next) {
   if(req.headers['x-forwarded-proto'] != 'https') {
     console.log(req.get('X-Forwarded-Port')+" "+" "+req.headers['x-forwarded-proto']+' lets seenew '+req.get('host') + req.originalUrl);
-    res.redirect('https://' + req.get('host') + req.originalUrl);
+    // res.redirect('https://' + req.get('host') + req.originalUrl);
   }
 });
 
