@@ -22,12 +22,12 @@ app.set('view engine', 'ejs');
 app.use(favicon(path.join(__dirname, 'public','images', 'favicon.ico')));
 
 // // Redirect http requests from http://jaketrent.com/post/https-redirect-node-heroku/
-// app.use(function(req, res, next) {
-//   if(req.headers['x-forwarded-proto'] != 'https') {
-//     console.log(req.get('X-Forwarded-Port')+" "+" "+req.headers['x-forwarded-proto']+' lets seenew '+req.get('host') + req.originalUrl);
-//     // res.redirect('https://' + req.get('host') + req.originalUrl);
-//   }
-// });
+app.use(function(req, res, next) {
+  if(req.headers['x-forwarded-proto'] != 'https') {
+    console.log(req.get('X-Forwarded-Port')+" "+" "+req.headers['x-forwarded-proto']+' lets seenew '+req.get('host') + req.originalUrl);
+    res.redirect('https://' + req.get('host') + req.originalUrl);
+  }
+});
 
 // app password protection
 var auth = function (req, res, next) {
