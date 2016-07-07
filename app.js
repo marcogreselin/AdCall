@@ -12,6 +12,11 @@ var vhost = require('vhost');
 
 var app = express();
 
+app.use(function(req, res, next) {
+    console.log(req.get['X-Forwarded-Port']+" "+req.headers['X-Forwarded-Proto']+' lets see3 '+req.get('host') + req.originalUrl);
+
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -22,7 +27,7 @@ app.use(favicon(path.join(__dirname, 'public','images', 'favicon.ico')));
 // // Redirect http requests from http://jaketrent.com/post/https-redirect-node-heroku/
 app.use(function(req, res, next) {
   if(req.get['X-Forwarded-Proto'] != 'https') {
-    console.log(req.get['X-Forwarded-Port']+" "+req.headers['X-Forwarded-Proto']+' lets see3 '+req.get('host') + req.originalUrl);
+    console.log(req.get('X-Forwarded-Port')+" "+req.headers('X-Forwarded-Proto')+' lets see4 '+req.get('host') + req.originalUrl);
     res.redirect('https://' + req.get('host') + req.originalUrl);
   }
 });
