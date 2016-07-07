@@ -21,8 +21,8 @@ app.use(favicon(path.join(__dirname, 'public','images', 'favicon.ico')));
 
 // // Redirect http requests from http://jaketrent.com/post/https-redirect-node-heroku/
 app.use(function(req, res, next) {
-  if(req.header['X-Forwarded-Proto'] != 'https') {
-    console.log(req.header['X-Forwarded-Port']+" "+req.headers['X-Forwarded-Proto']+' lets see3 '+req.get('host') + req.originalUrl);
+  if(req.get['X-Forwarded-Proto'] != 'https') {
+    console.log(req.get['X-Forwarded-Port']+" "+req.headers['X-Forwarded-Proto']+' lets see3 '+req.get('host') + req.originalUrl);
     res.redirect('https://' + req.get('host') + req.originalUrl);
   }
 });
