@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
+  console.log(JSON.stringify(req.headers));
   res.render('index');
 });
 

@@ -12,10 +12,7 @@ var vhost = require('vhost');
 
 var app = express();
 
-app.use(function(req, res, next) {
-    console.log(req.get['X-Forwarded-Port']+" "+req.headers['X-Forwarded-Proto']+' lets see3 '+req.get('host') + req.originalUrl);
 
-});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,12 +22,12 @@ app.set('view engine', 'ejs');
 app.use(favicon(path.join(__dirname, 'public','images', 'favicon.ico')));
 
 // // Redirect http requests from http://jaketrent.com/post/https-redirect-node-heroku/
-app.use(function(req, res, next) {
-  if(req.get['X-Forwarded-Proto'] != 'https') {
-    console.log(req.get('X-Forwarded-Port')+" "+req.headers('X-Forwarded-Proto')+' lets see4 '+req.get('host') + req.originalUrl);
-    res.redirect('https://' + req.get('host') + req.originalUrl);
-  }
-});
+// app.use(function(req, res, next) {
+//   if(req.get['X-Forwarded-Proto'] != 'https') {
+//     console.log(req.get('X-Forwarded-Port')+" "+req.headers('X-Forwarded-Proto')+' lets see4 '+req.get('host') + req.originalUrl);
+//     res.redirect('https://' + req.get('host') + req.originalUrl);
+//   }
+// });
 
 // app password protection
 var auth = function (req, res, next) {
@@ -110,12 +107,12 @@ app.use(function(err, req, res, next) {
 
 
 // Redirect Consol app
-var redirect = express();
-
-redirect.use(function(req, res){
-  if (!module.parent) console.log(req.vhost);
-  res.render('http://www.nyt.com');
-});
-
-app.use(vhost('console.adcall.io', redirect));
+// var redirect = express();
+//
+// redirect.use(function(req, res){
+//   if (!module.parent) console.log(req.vhost);
+//   res.render('http://www.nyt.com');
+// });
+//
+// app.use(vhost('console.adcall.io', redirect));
 module.exports = app;
