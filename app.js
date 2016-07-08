@@ -14,6 +14,7 @@ var vhost = require('vhost');
 
 var app = express();
 
+
 // view engine setup
 app.set('views', path.join(__dirname, '/src/views'));
 app.set('view engine', 'ejs');
@@ -113,7 +114,15 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+
+
 // Redirect Console app
+
+var generalApp = express();
+
+
+
 var redirect = express();
 
 redirect.use(function(req, res){
@@ -121,7 +130,10 @@ redirect.use(function(req, res){
   res.render('http://www.nyt.com');
 });
 
-app.use(vhost('console.adcall.io', redirect));
+generalApp.use(vhost('www.adcall.io', app));
+generalApp.use(vhost('adcall.io', app));
+generalApp.use(vhost('localhost', app));
+generalApp.use(vhost('console.adcall.io', redirect));
 
 
-module.exports = app;
+module.exports = generalApp;
