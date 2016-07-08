@@ -24,9 +24,9 @@ app.set('view engine', 'ejs');
 // favicon
 app.use(favicon(path.join(__dirname, 'public','images', 'favicon.ico')));
 
-// Redirect http requests from http://jaketrent.com/post/https-redirect-node-heroku/
+// Redirect HTTP requests inspired by http://jaketrent.com/post/https-redirect-node-heroku/
 app.use(function(req, res, next) {
-  if(req.headers['x-forwarded-proto'] === 'http' && req.headers['host'] != 'localhost:3000') {
+  if(req.headers['x-forwarded-proto'] === 'http' && app.get('env') != 'development') {
     res.redirect('https://' + req.get('host') + req.originalUrl);
   }
   next();
@@ -60,8 +60,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
   secret: 'buttery',
-  resave: true,
-  saveUninitialized: true
+  resave: false,
+  saveUninitialized: false
 }));
 require('./src/config/passport')(app);
 

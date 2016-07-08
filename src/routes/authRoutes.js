@@ -9,12 +9,17 @@ router.route('/signup')
 
 
         pg.defaults.ssl = true;
-        pg.connect(process.env.DATABASE_URL | 'postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah' , function(err, client) {
+        pg.connect(process.env.DATABASE_URL || 'postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah', function(err, client) {
             if (err) throw err;
             console.log('Connected to postgres! Getting schemas...');
 
             client
-                .query('INSERT INTO userta (companyname, username, password, address, phone) VALUES (\'comps\', \'un\', \'pw\', \'add\', \'ph\');')
+                .query(`INSERT INTO agent (admin, email, password, firstname, lastname, position) 
+                VALUES (true, 'marcogresemnmlin@me.com\', 'gallome33-', 'Marco', 'Greselin', 'CEO');`, function(err, result) {
+                    if(err){
+                        console.log(err);
+                    }
+                })
                 .on('row', function(row) {
                     console.log(JSON.stringify(row));
                 });
