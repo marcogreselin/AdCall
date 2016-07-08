@@ -14,8 +14,8 @@ var vhost = require('vhost');
 
 var app = express();
 
-// redirect console users
-app.use(vhost('console.adcall.io', require('./consoleApp').app));
+// // redirect console users
+// app.use(vhost('console.adcall.io', require('./consoleApp').app));
 
 // view engine setup
 app.set('views', path.join(__dirname, '/src/views'));
@@ -24,16 +24,13 @@ app.set('view engine', 'ejs');
 // favicon
 app.use(favicon(path.join(__dirname, 'public','images', 'favicon.ico')));
 
-// // Redirect http requests from http://jaketrent.com/post/https-redirect-node-heroku/
-// app.use(function(req, res, next) {
-//   if(req.headers['x-forwarded-proto'] === 'https') {
-//     console.log('great');
-//   } else {
-//     console.log(req.get('X-Forwarded-Port')+" "+" "+req.headers['x-forwarded-proto']+' lets seenew '+'https://' + req.get('host') + req.originalUrl);
-//     res.redirect('https://' + req.get('host') + req.originalUrl);
-//     // res.redirect('https://' + req.get('host') + req.originalUrl);
-//   }
-// });
+// Redirect http requests from http://jaketrent.com/post/https-redirect-node-heroku/
+app.use(function(req, res, next) {
+  if(req.headers['x-forwarded-proto'] === 'http' && req.headers['host'] != 'localhost:3000') {
+    res.redirect('https://' + req.get('host') + req.originalUrl);
+  }
+  next();
+});
 
 // app password protection
 var auth = function (req, res, next) {
