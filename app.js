@@ -14,6 +14,8 @@ var vhost = require('vhost');
 
 var app = express();
 
+// redirect console users
+app.use(vhost('console.adcall.io', require('./consoleApp').app));
 
 // view engine setup
 app.set('views', path.join(__dirname, '/src/views'));
@@ -119,21 +121,21 @@ app.use(function(err, req, res, next) {
 
 // Redirect Console app
 
-var generalApp = express();
+// var generalApp = express();
+//
+//
+//
+// var redirect = express();
+//
+// redirect.use(function(req, res){
+//   if (!module.parent) console.log(req.vhost);
+//   res.render('login');
+// });
+//
+// generalApp.use(vhost('www.adcall.io', app));
+// generalApp.use(vhost('adcall.io', app));
+// generalApp.use(vhost('localhost', app));
+// generalApp.use(vhost('console.adcall.io', redirect));
 
 
-
-var redirect = express();
-
-redirect.use(function(req, res){
-  if (!module.parent) console.log(req.vhost);
-  res.render('login');
-});
-
-generalApp.use(vhost('www.adcall.io', app));
-generalApp.use(vhost('adcall.io', app));
-generalApp.use(vhost('localhost', app));
-generalApp.use(vhost('console.adcall.io', redirect));
-
-
-module.exports = generalApp;
+module.exports = app;
