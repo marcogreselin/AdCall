@@ -9,7 +9,7 @@ router.route('/signup')
 
 
         pg.defaults.ssl = true;
-        pg.connect('postgres://srluuemmvrruax:6_KdnWlAOLemnOl8otCtm-7JhH@ec2-54-243-48-181.compute-1.amazonaws.com:5432/dbb08efco22k2q' , function(err, client) {
+        pg.connect(process.env.DATABASE_URL | 'postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah' , function(err, client) {
             if (err) throw err;
             console.log('Connected to postgres! Getting schemas...');
 
