@@ -127,7 +127,7 @@ var redirect = express();
 
 redirect.use(function(req, res){
   if (!module.parent) console.log(req.vhost);
-  res.render('http://www.nyt.com');
+  res.render('login');
 });
 
 generalApp.use(vhost('www.adcall.io', app));
