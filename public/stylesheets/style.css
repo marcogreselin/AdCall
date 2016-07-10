@@ -128,9 +128,11 @@ footer {
   font-size: 1.2rem;
   padding: 20px;
   text-align: center; }
+  .registration-page .left {
+    text-align: right; }
   .registration-page main {
     border-radius: 3px;
-    width: 800px;
+    width: 600px;
     margin-left: auto;
     margin-right: auto;
     padding-left: 20px;
@@ -140,21 +142,23 @@ footer {
   .registration-page .row {
     margin: 5px;
     display: flex;
-    align-items: center; }
+    align-items: center;
+    height: 50px; }
   .registration-page .col-md-4 {
     padding: 0px; }
   .registration-page input {
     border: 3px solid white;
     border-radius: 4px;
     color: black;
-    width: 100%; }
+    width: 100%;
+    padding-left: 5px; }
   .registration-page button {
     border: 3px solid white;
     border-radius: 4px;
     color: white;
     background-color: transparent;
     transition: background-color 0.1s ease;
-    margin-top: 20px; }
+    margin-top: 15px; }
   .registration-page button:hover {
     background-color: white;
     color: #000; }
