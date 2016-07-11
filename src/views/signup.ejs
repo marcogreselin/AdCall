@@ -10,45 +10,78 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
-    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="../stylesheets/style.css">
 </head>
-<body class="login-page">
+<body class="registration-page">
 <header>
     <div class="container">
         <a href="/" title="Take me home">
-            <img class="logo" src="images/logo.png">
+            <img class="logo" src="../images/logo.png">
         </a>
         <p>
-        <h1>Sign Up</h1>
+        <h1>Sign Up Form</h1>
         </p>
     </div>
 </header>
 
-<main class="signup-page">
+<main>
+    <div class="registration-mask">
+        <form name="signup-advertiser" id="signup-form" action="../auth/signup" method="POST">
+            <!--method="post" action="/auth/signup"-->
 
-    <form>
-        <div class="container login-page">
-            <p>What Account do you need:</p>
-            <p><select onChange="document.location = this.value">
-                <option value="" disabled selected>Make a choice</option>
-                <option value="signup/advertiser">Advertiser</option>
-                <option value="signup/publisher">Publisher</option>
-            </select></p>
-            <!--<button>Next</button>-->
-        </div>
-    </form>
+            <div class="row"><div class="col-sm-4 left"><label for="firstname">First Name:</label></div> <div class="col-sm-8"><input type="text" name="firstname" id="firstname"></div></div>
+            <div class="row"><div class="col-sm-4 left"><label for="lastname">Last Name:</label></div> <div class="col-sm-8"><input type="text" name="lastname" id="lastname"></div></div>
+            <div class="row"><div class="col-sm-4 left"><label for="email">Email:</label></div> <div class="col-sm-8"><input type="text" name="email" id="email"></div></div>
+            <div class="row"><div class="col-sm-4 left"><label for="password1">Password:</label></div> <div class="col-sm-8"><input type="password" name="password1" id="password1"></div></div>
+            <div class="row"><div class="col-sm-4 left"><label for="password">Repeat Password:</label></div> <div class="col-sm-8"><input type="password" name="password" id="password"></div></div>
+
+            <button id="signup-btn">Sign Up!</button>
+        </form>
+    </div>
+
 
 </main>
-
-<footer>
-    <div class="container">
-        &copy; MMXVI Marco Greselin
-    </div>
-</footer>
-
 
 <!-- jQuery first, then Bootstrap JS. -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#signup-form').validate({
+            rules: {
+                firstname: {
+                    required: true
+                },
+                lastname: {
+                    required: true
+                },
+                password: {
+                    equalTo: '#password1',
+                    required: true
+                },
+                password1: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                firstname: "What's your name again?",
+                lastname: "There's space for a last name.",
+                email: "Please provide a (real) email address.",
+                password: "Looks like the two passwords don't match. Try again.",
+                password1: "Choose a password. Sshh."
+            }
+        })
+
+    });
+
+
+</script>
+
 </body>
 </html>

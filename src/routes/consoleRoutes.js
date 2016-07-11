@@ -2,6 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 // console routes
+
+router.use(function (req, res, next) {
+    if(!req.user){
+        res.redirect('/');
+    }
+    next();
+})
 router.get('/', function(req, res) {
     res.render('console/');
 });

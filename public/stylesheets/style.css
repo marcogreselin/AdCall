@@ -83,6 +83,13 @@ footer {
   font-size: 1.5rem;
   padding: 20px;
   text-align: center; }
+  .login-page label.error {
+    font-size: 10px;
+    margin-bottom: 0px;
+    margin-left: 17px;
+    margin-top: 3px;
+    display: block;
+    position: absolute; }
   .login-page main {
     border-radius: 3px;
     max-width: 500px;
@@ -92,6 +99,8 @@ footer {
     padding-right: 70px;
     padding-top: 30px;
     padding-bottom: 30px; }
+  .login-page .row {
+    height: 70px; }
   .login-page p {
     display: block; }
   .login-page input {
@@ -100,7 +109,10 @@ footer {
     color: black;
     margin-left: 10px;
     padding-left: 8px; }
+  .login-page input.error {
+    border: solid #F2E278; }
   .login-page button {
+    margin-top: 15px;
     border: 3px solid white;
     border-radius: 4px;
     color: white;
@@ -128,6 +140,13 @@ footer {
   font-size: 1.2rem;
   padding: 20px;
   text-align: center; }
+  .registration-page label.error {
+    font-size: 10px;
+    margin-bottom: 0px;
+    margin-left: 5px;
+    margin-top: 3px;
+    display: block;
+    position: absolute; }
   .registration-page .left {
     text-align: right; }
   .registration-page main {
@@ -143,7 +162,7 @@ footer {
     margin: 5px;
     display: flex;
     align-items: center;
-    height: 50px; }
+    height: 57px; }
   .registration-page .col-md-4 {
     padding: 0px; }
   .registration-page input {
@@ -152,13 +171,15 @@ footer {
     color: black;
     width: 100%;
     padding-left: 5px; }
+  .registration-page input.error {
+    border: solid #F2E278; }
   .registration-page button {
     border: 3px solid white;
     border-radius: 4px;
     color: white;
     background-color: transparent;
     transition: background-color 0.1s ease;
-    margin-top: 15px; }
+    margin-top: 20px; }
   .registration-page button:hover {
     background-color: white;
     color: #000; }
