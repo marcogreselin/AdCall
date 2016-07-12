@@ -10,7 +10,7 @@ router.route('/signup')
             `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
             if (err){
                 console.log(err['detail']);
-                res.status(500).send('The connection to the database went wrong.');
+                res.redirect('/');
                 console.log('first');
             } else {
                 client
@@ -19,16 +19,16 @@ router.route('/signup')
                         if(err) {
                             if (err.constraint) {
                                 console.log(err);
-                                res.status(500).send("This email address is already registered with us.");
+                                res.redirect('/');
                             } else {
                                 console.log(err);
-                                res.status(500).send("Something is wrong. Contact us!");
+                                res.redirect('/');
                             }
                         } else {
                             // If the user is created correctly we will log her in using passport.
                             // Not needed when logging in.
                             req.login(req.body, function(){
-                                res.redirect('/auth/profile');
+                                res.redirect('../console');
                             });
                         }
                     });
@@ -40,7 +40,7 @@ router.route('/signup')
 
 router.route('/login')
     .post(passport.authenticate('local', {
-        failureRedirect: '/' // if signup does not work, I will go to /
+        failureRedirect: '/' // if signup does not work, I will go to '/'
     }), function(req, res){ // if signup works fine, I will go to profile
         console.log('user logged in');
         res.redirect('../console');
