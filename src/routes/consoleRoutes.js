@@ -21,7 +21,6 @@ router.use(function (req, res, next) {
 // From http://stackoverflow.com/questions/15719116/verify-access-group-in-passport-js
 var assignedUser = function() {
     return function(req, res, next) {
-        console.log(req.originalUrl);
         if (req.user && req.user.companyid != null)
             next();
         else if (req.originalUrl === '/console/setup')
@@ -34,7 +33,6 @@ var assignedUser = function() {
 // Menu for header
 var nav = function() {
     return function(req,res,next) {
-        console.log(JSON.stringify(req.user));
         res.nav = [];
         var advertisernav = [{
                 link: '../console/my-ads',
@@ -77,7 +75,6 @@ router.route('/setup')
         res.render('console/setup')
     })
     .post(function(req, res) {
-        console.log(JSON.stringify(req.user));
         pg.defaults.ssl = true;
         pg.connect(process.env.DATABASE_URL || `postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
             `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
