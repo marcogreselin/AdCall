@@ -99,6 +99,9 @@ footer {
     padding-right: 70px;
     padding-top: 30px;
     padding-bottom: 30px; }
+  .login-page .err {
+    color: #F2E278;
+    font-size: 13px; }
   .login-page .row {
     height: 70px; }
   .login-page p {

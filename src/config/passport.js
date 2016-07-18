@@ -5,12 +5,16 @@ module.exports = function(app) {
     app.use(passport.initialize());
     app.use(passport.session());
 
+    // This is called after req.login to store data to the session
     passport.serializeUser(function(user, done){
-        done(null, user);
+        done(null, user.rows[0]);
     });
+
+    // This is called when req.user is invoked
     passport.deserializeUser(function(userId, done){
         done(null, userId);
     });
+
 
     require('./strategies/local.strategy')();
 };

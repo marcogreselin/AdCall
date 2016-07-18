@@ -11,6 +11,7 @@ var mainRoutes = require('./src/routes/mainRoutes');
 var consoleRoutes = require('./src/routes/consoleRoutes');
 var authRoutes = require('./src/routes/authRoutes');
 var vhost = require('vhost');
+var flash = require ('connect-flash');
 
 var app = express();
 
@@ -63,7 +64,18 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+app.use(flash());
 require('./src/config/passport')(app);
+
+// Allows to send selected user data to response if logged in
+function userData(req, res, next)  {
+  if(req.user && req.user.firstname){
+    res.locals.user = req.user.firstname;
+  }
+  next();
+};
+
+app.use(userData);
 
 // sass compiler
 app.use(require('node-sass-middleware')({

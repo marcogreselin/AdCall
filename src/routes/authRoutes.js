@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-var passport = require('passport')
+var passport = require('passport');
+var bcrypt = require('bcrypt');
 
 router.route('/signup')
     .post(function (req, res, next) {
@@ -9,29 +10,43 @@ router.route('/signup')
         pg.connect(process.env.DATABASE_URL || `postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
             `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
             if (err){
-                console.log(err['detail']);
+                console.log("Error reaching DB when creating account "+err['detail']);
                 res.redirect('/');
-                console.log('first');
             } else {
-                client
-                    .query(`INSERT INTO agent (admin, email, password, firstname, lastname)
-                VALUES (false, '${req.body.email}', '${req.body.password}', '${req.body.firstname}', '${req.body.lastname}');`, function(err, result) {
-                        if(err) {
-                            if (err.constraint) {
-                                console.log(err);
-                                res.redirect('/');
-                            } else {
-                                console.log(err);
-                                res.redirect('/');
-                            }
-                        } else {
-                            // If the user is created correctly we will log her in using passport.
-                            // Not needed when logging in.
-                            req.login(req.body, function(){
-                                res.redirect('../console');
+                const saltRounds = 10;
+                const plaintextPassword = req.body.password
+                // Hash the password
+                bcrypt.hash(plaintextPassword, saltRounds, function(err, hash) {
+                    if (err){
+                        console.log("Error when hashing password during registration. " + err);
+                        res.redirect('/');
+                    } else {
+
+                        client
+                            .query(`INSERT INTO agent (admin, email, password, firstname, lastname)
+                VALUES (false, '${req.body.email}', '${hash}', '${req.body.firstname}', '${req.body.lastname}');`, function(err, result) {
+                                if(err) {
+                                    if (err.constraint) {
+                                        console.log(err);
+                                        res.redirect('/');
+                                    } else {
+                                        console.log(err);
+                                        res.redirect('/');
+                                    }
+                                } else {
+                                    // If the user is created correctly we will log her in using passport.
+                                    // Not needed when logging in.
+                                    res.login(req.body, function(){
+                                        res.redirect('../console');
+                                    });
+                                }
                             });
-                        }
-                    });
+
+                    }
+                });
+
+
+
             }
 
         });
@@ -39,12 +54,11 @@ router.route('/signup')
     });
 
 router.route('/login')
-    .post(passport.authenticate('local', {
-        failureRedirect: '/' // if signup does not work, I will go to '/'
-    }), function(req, res){ // if signup works fine, I will go to profile
-        console.log('user logged in');
-        res.redirect('../console');
-    });
+    .post(passport.authenticate('local-login', {
+        successRedirect: '/console',
+        failureFlash: true,
+        failureRedirect: '/login' // if signup does not work, I will go to '/'
+    }));
 
 
 router.route('/logout')

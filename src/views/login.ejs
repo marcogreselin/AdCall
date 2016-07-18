@@ -26,10 +26,16 @@
 
 <main>
 
+
+
     <form id="login-form" method="post" action="../auth/login">
         <div class="container login-page">
             <div class="row"><label for="email"></label><input type="text" placeholder="email" id="email" name="email"></div>
             <div class="row"><label for="password"></label><input type="password" placeholder="password" id="password" name="password"></div>
+            <% if(message[0] != null) { %>
+            <div class="err"> <%= message[0] %> </div>
+            <% } %>
+
             <p><button id="login-btn">Enter!</button></p>
             <a href="/signup"><h6>Don't have an account?</h6></a>
         </div>
