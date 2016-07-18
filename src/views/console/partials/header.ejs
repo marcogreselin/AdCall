@@ -6,11 +6,13 @@
                 <img class="logo" src="../images/logo-loggedin.png">
             </a>
 
-            <ul class="left">
-                <li><a href="../console/my-ads">My Ads</a></li>
-                <li><a href="../console/snippet">Get your snippet</a></li>
-                <li><a href="../console/answer">Answer Calls</a></li>
-            </ul>
+            <% if(locals.nav){ %>
+                <ul class="left">
+                    <% for(var i=0; i<locals.nav.length; i++) { %>
+                        <li><a href="<%= locals.nav[i].link %>"><%= locals.nav[i].text %></a></li>
+                    <% } %>
+                </ul>
+            <% } %>
 
             <ul class="right">
                 <li>Welcome <%= locals.user %></li>

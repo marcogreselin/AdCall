@@ -70,7 +70,7 @@ require('./src/config/passport')(app);
 // Allows to send selected user data to response if logged in
 function userData(req, res, next)  {
   if(req.user && req.user.firstname){
-    res.locals.user = req.user.firstname;
+    res.user = req.user.firstname;
   }
   next();
 };
