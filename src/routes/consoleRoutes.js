@@ -60,9 +60,17 @@ var nav = function() {
         }
         next();
     }
-
 };
 
+// Allows to send selected user data to response if logged in
+function userData(req, res, next)  {
+    if(req.user && req.user.firstname){
+        res.locals.userfirstname = req.user.firstname;
+    }
+    next();
+};
+
+router.use(userData);
 router.use(nav());
 router.use(assignedUser());
 
@@ -72,6 +80,8 @@ router.get('/', function(req, res) {
 
 router.route('/setup')
     .get(nav(), function(req, res) {
+        var email = req.user.email;
+        res.locals.email = email;
         res.render('console/setup')
     })
     .post(function(req, res) {
@@ -81,22 +91,21 @@ router.route('/setup')
             if (err) {
                 console.log('Connection issue when retrieving data: ' + JSON.stringify(err));
             } else {
-                client
-                    .query(`INSERT INTO company (companyname, companytype, address1, address2, postcode, city, country, createdby)
-                        VALUES ('${req.body.companyname}', ${req.body.companytype}, '${req.body.address1}', '${req.body.address2}', 
-                        '${req.body.postcode}', '${req.body.city}', '${req.body.country}', ${req.user.agentid});
-                        UPDATE agent SET companyid=(SELECT companyid from company WHERE createdby = ${req.user.agentid}) WHERE agentid = ${req.user.agentid};
-                        SELECT companyid FROM agent WHERE agentid = ${req.user.agentid}`,
-                        function (err, result) {
-                            if(err)
-                                console.log(err.toString());
-                            // Now that the companyid has been added we should add it to the user object
-                            // console.log(JSON.stringify(result))
-                            // console.log(JSON.stringify(req.user))
-                            req.user.companyid = result.rows[0].companyid;
-                            req.user.companytype = result.rows[0].companytype;
-                            res.redirect('/console');
-                        });
+                client.query(`INSERT INTO company (companyname, companytype, address1, address2, postcode, city, country, createdby)
+                VALUES ('${req.body.companyname}', ${req.body.companytype}, '${req.body.address1}', '${req.body.address2}', 
+                '${req.body.postcode}', '${req.body.city}', '${req.body.country}', ${req.user.agentid});
+                UPDATE agent SET companyid=(SELECT companyid from company WHERE createdby = ${req.user.agentid}) WHERE agentid = ${req.user.agentid};
+                SELECT companyid FROM agent WHERE agentid = ${req.user.agentid}`,
+                function (err, result) {
+                    if(err)
+                        console.log(err.toString());
+                    // Now that the companyid has been added we should add it to the user object
+                    // console.log(JSON.stringify(result))
+                    // console.log(JSON.stringify(req.user))
+                    req.user.companyid = result.rows[0].companyid;
+                    req.user.companytype = result.rows[0].companytype;
+                    res.redirect('/console');
+                });
             }
         })
     });

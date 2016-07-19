@@ -3,11 +3,6 @@ var router = express.Router();
 var flash = require('connect-flash');
 
 router.get('/', function(req, res, next) {
-  // if(req.headers['x-forwarded-proto'] === 'https') {
-  //   res.render('index');
-  // } else {
-  //   res.redirect('https://adcall.io');
-  // }
   res.render('index');
 });
 
@@ -21,9 +16,6 @@ router.route('/signup')
 .get(function(req, res, next) {
   res.render('signup')
 });
-// .post(function(req, res, next) {
-//   res.render('signup', {type: req.type});
-// })
 
 // GET login page.
 router.get('/signup/advertiser', function(req, res, next) {

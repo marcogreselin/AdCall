@@ -14,37 +14,50 @@
 </head>
 <body>
 <% include partials/header.ejs %>
-
+<div class="setup">
 <main>
-    <div class="container">
-        <h1>Ask your Admin to add you to the Company account.</h1>
 
+    <img src="../images/welcome.png" width="500px" alt="Welcome!">
+    <h5>Let's get you setup!</h5>
 
-        <h1>Or create a new company</h1>
-        <form action="" method="post">
-            <select name="companytype" id="companytype">
-                <option selected disabled>Select your company type</option>
-                <option value="1">Advertiser</option>
-                <option value="2">Publisher</option>
-                <option value="3">Agency</option>
-            </select>
-            <div class="row"><div class="col-sm-4 left"><label for="companyname">Company Name:</label></div> <div class="col-sm-8"><input type="text" name="companyname" id="companyname"></div></div>
-            <div class="row"><div class="col-sm-4 left"><label for="address1">Address:</label></div> <div class="col-sm-8"><input type="text" name="address1" id="address1"><br><input type="text" name="address2" id="address2"></div></div>
-            <div class="row"><div class="col-sm-4 left"><label for="postcode">Post Code:</label></div> <div class="col-sm-8"><input type="text" name="postcode" id="postcode"></div></div>
-            <div class="row"><div class="col-sm-4 left"><label for="city">City:</label></div> <div class="col-sm-8"><input type="text" name="city" id="city"></div></div>
+    <div class="wrap">
+        <h3>Is your company registered with us?</h3>
+        If yes, please ask your admin to add you to their company account. It's super quick.
+        <div class="highlight">The email you used to register is: <span id="email"><%= locals.email %> </span>  </div>
+    </div>
+    <div class="wrap">
+        <h3>Are you the first user in your company?</h3>
+        Then welcome! Let's register your company here. Just fill out the form below to become the admin of your company account.
+
+        <form id="company-registration">
+        <select name="companytype" id="companytype">
+            <option selected disabled>Select your company type</option>
+            <option value="1">Advertiser</option>
+            <option value="2">Publisher</option>
+            <option value="3">Agency</option>
+        </select>
+        <div class="row"><div class="col-sm-4 left"><label for="companyname">Company Name:</label></div> <div class="col-sm-8"><input type="text" name="companyname" id="companyname"></div></div>
+        <div class="row"><div class="col-sm-4 left"><label for="address1">Address:</label></div> <div class="col-sm-8"><input type="text" name="address1" id="address1"><br><input type="text" name="address2" id="address2"></div></div>
+        <div class="row"><div class="col-sm-4 left"><label for="postcode">Post Code:</label></div> <div class="col-sm-8"><input type="text" name="postcode" id="postcode"></div></div>
+        <div class="row"><div class="col-sm-4 left"><label for="city">City:</label></div> <div class="col-sm-8"><input type="text" name="city" id="city"></div></div>
+        <div class="row last"><div class="col-sm-4 left">Country:</div><div class="col-sm-8">
             <select name="country" id="country">
                 <option selected disabled>Select your country</option>
                 <option value="UK">United Kingdom</option>
             </select>
-            <button>Create Company</button>
+        </div></div>
+
+            <div class="errorsbox"></div>
+        <button>Create Company</button>
 
         </form>
+    </div>
         
 
 
-    </div>
 
 </main>
+</div>
 
 <% include partials/footer.ejs %>
 
@@ -53,5 +66,51 @@
 <!-- jQuery first, then Bootstrap JS. -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#company-registration').validate({
+            rules: {
+                companyname: {
+                    required: true
+                },
+                address1: {
+                    required: true
+                },
+                postcode: {
+                    required: true
+                },
+                city: {
+                    required: true
+                }
+            },
+            messages: {
+                companyname: "Please enter your company name.",
+                address1: "Please enter your company address.",
+                postcode: "What is your postcode?",
+                city: "Wher's your company based?"
+            },
+
+
+            errorLabelContainer:".errorsbox",
+            wrapper:"li"
+//            errorPlacement: function (error, element) {
+//                if(!$(".erorsbox")){
+//                    $(".last").append('<div class="errorsbox"></div>"')
+//                } else {
+//                    $(".errorsbox").append("<li>"+error+"</li>");
+//                }
+//
+//            }
+        })
+
+    });
+
+
+</script>
+
 </body>
 </html>

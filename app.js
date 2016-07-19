@@ -10,7 +10,7 @@ var basicAuth = require('basic-auth');
 var mainRoutes = require('./src/routes/mainRoutes');
 var consoleRoutes = require('./src/routes/consoleRoutes');
 var authRoutes = require('./src/routes/authRoutes');
-var vhost = require('vhost');
+// var vhost = require('vhost');
 var flash = require ('connect-flash');
 
 var app = express();
@@ -67,15 +67,7 @@ app.use(session({
 app.use(flash());
 require('./src/config/passport')(app);
 
-// Allows to send selected user data to response if logged in
-function userData(req, res, next)  {
-  if(req.user && req.user.firstname){
-    res.locals.userfirstname = req.user.firstname;
-  }
-  next();
-};
 
-app.use(userData);
 
 // sass compiler
 app.use(require('node-sass-middleware')({
@@ -127,24 +119,6 @@ app.use(function(err, req, res, next) {
 
 
 
-
-// Redirect Console app
-
-// var generalApp = express();
-//
-//
-//
-// var redirect = express();
-//
-// redirect.use(function(req, res){
-//   if (!module.parent) console.log(req.vhost);
-//   res.render('login');
-// });
-//
-// generalApp.use(vhost('www.adcall.io', app));
-// generalApp.use(vhost('adcall.io', app));
-// generalApp.use(vhost('localhost', app));
-// generalApp.use(vhost('console.adcall.io', redirect));
 
 
 module.exports = app;
