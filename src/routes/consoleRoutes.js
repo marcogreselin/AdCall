@@ -93,7 +93,6 @@ var restrictTo = function (companyType) {
 };
 
 router.get('/', function(req, res) {
-    console.log(JSON.stringify(req.user));
     res.render('console/');
 });
 

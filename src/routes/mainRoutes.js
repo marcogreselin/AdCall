@@ -15,7 +15,6 @@ var consoleRedirect = function(req,res,next){
 };
 router.use(consoleRedirect);
 
-
 router.get('/', function(req, res, next) {
   res.render('index');
 });
