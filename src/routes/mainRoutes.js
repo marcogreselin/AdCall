@@ -3,15 +3,13 @@ var router = express.Router();
 var flash = require('connect-flash');
 
 
-
+// Redirect users that are logged in to the console.
+// Ever other route is blocked exchept for auth that we need to logout
 var consoleRedirect = function(req,res,next){
   var url = req.originalUrl;
-  if(req.user && (!url.match(/\/console*/g) || !url)){
-    // console.log(req.originalUrl);
+  if(req.user && (!url.match(/\/console*|\/auth*/g) || !url)){
     res.redirect('/console');
-
   } else {
-    console.log(url);
     next();
   }
 };
@@ -21,7 +19,6 @@ router.use(consoleRedirect);
 router.get('/', function(req, res, next) {
   res.render('index');
 });
-
 
 // GET login page.
 router.get('/login', function(req, res, next) {
