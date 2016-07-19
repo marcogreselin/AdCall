@@ -68,7 +68,6 @@ app.use(flash());
 require('./src/config/passport')(app);
 
 
-
 // sass compiler
 app.use(require('node-sass-middleware')({
   src: path.join(__dirname, 'public'),
@@ -88,9 +87,10 @@ app.use('/auth', authRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  // var err = new Error('Not Found');
+  // err.status = 404;
+  // next(err);
+  res.redirect('/');
 });
 
 // error handlers
@@ -116,9 +116,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-
-
-
 
 module.exports = app;

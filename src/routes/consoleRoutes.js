@@ -46,10 +46,14 @@ var nav = function() {
             link: '../console/snippet',
             text: 'Snippet'
         }];
-        var agency = [{
+        var agencynav = [{
             link: '../console/create',
             text: 'Create Campaign'
         }];
+        var adminnav = {
+            link: '../console/addagents',
+            text: 'Add Agents'
+        }
         if (req.user && req.user.companyid != null){
             if(req.user.companytype === 1)
                 res.locals.nav = advertisernav;
@@ -57,6 +61,11 @@ var nav = function() {
                 res.locals.nav = publishernav;
             else if(req.user.companytype === 3)
                 res.locals.nav = agencynav;
+            // If the user is an admin of that account,
+            // she should be able to add other users to that company.
+            if(req.user.admin === true){
+                res.locals.nav.push(adminnav);
+            }
         }
         next();
     }
@@ -98,9 +107,14 @@ router.get('/', function(req, res) {
 
 router.route('/setup')
     .get(nav(), function(req, res) {
-        var email = req.user.email;
-        res.locals.email = email;
-        res.render('console/setup')
+        // This page should be accessible only if an agent has not been associated to a company.
+        if(req.user.companyid != null){
+            res.redirect('console/');
+        } else {
+            var email = req.user.email;
+            res.locals.email = email;
+            res.render('console/setup')
+        }
     })
     .post(function(req, res) {
         pg.defaults.ssl = true;
@@ -112,7 +126,7 @@ router.route('/setup')
                 client.query(`INSERT INTO company (companyname, companytype, address1, address2, postcode, city, country, createdby)
                 VALUES ('${req.body.companyname}', ${req.body.companytype}, '${req.body.address1}', '${req.body.address2}', 
                 '${req.body.postcode}', '${req.body.city}', '${req.body.country}', ${req.user.agentid});
-                UPDATE agent SET companyid=(SELECT companyid from company WHERE createdby = ${req.user.agentid}) WHERE agentid = ${req.user.agentid};
+                UPDATE agent SET companyid=(SELECT companyid from company WHERE createdby = ${req.user.agentid}), admin=true WHERE agentid = ${req.user.agentid};
                 SELECT company.companyid, company.companytype FROM agent JOIN company ON company.companyid=agent.companyid WHERE agentid = ${req.user.agentid}`,
                 function (err, result) {
                     if(err)
