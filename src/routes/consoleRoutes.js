@@ -74,7 +74,26 @@ router.use(userData);
 router.use(nav());
 router.use(assignedUser());
 
+var restrictTo = function (companyType) {
+    return function (req,res,next) {
+        var _companyType;
+        if (companyType === 'advertiser') {
+            _companyType = 1;
+        } else if (companyType === 'publisher') {
+            _companyType = 2;
+        } else if (companyType === 'agency'){
+            _companyType = 3;
+        }
+        if(_companyType === req.user.companytype){
+            next();
+        } else {
+            res.redirect('/console');
+        }
+    }
+};
+
 router.get('/', function(req, res) {
+    console.log(JSON.stringify(req.user));
     res.render('console/');
 });
 
@@ -95,7 +114,7 @@ router.route('/setup')
                 VALUES ('${req.body.companyname}', ${req.body.companytype}, '${req.body.address1}', '${req.body.address2}', 
                 '${req.body.postcode}', '${req.body.city}', '${req.body.country}', ${req.user.agentid});
                 UPDATE agent SET companyid=(SELECT companyid from company WHERE createdby = ${req.user.agentid}) WHERE agentid = ${req.user.agentid};
-                SELECT companyid FROM agent WHERE agentid = ${req.user.agentid}`,
+                SELECT company.companyid, company.companytype FROM agent JOIN company ON company.companyid=agent.companyid WHERE agentid = ${req.user.agentid}`,
                 function (err, result) {
                     if(err)
                         console.log(err.toString());
@@ -110,21 +129,21 @@ router.route('/setup')
         })
     });
 
-router.get('/analytics', function(req, res) {
-    res.render('console/analytics');
-});
+// router.get('/analytics', function(req, res) {
+//     res.render('console/analytics');
+// });
 
 // console advertiser
-router.get('/answer', function(req, res) {
+router.get('/answer', restrictTo('advertiser'), function(req, res) {
     res.render('console/answer');
 });
 
-router.get('/my-ads', function(req, res) {
+router.get('/my-ads', restrictTo('advertiser'), function(req, res) {
     res.render('console/my-ads');
 });
 
 // console publisher
-router.get('/snippet', function(req, res) {
+router.get('/snippet', restrictTo('publisher'), function(req, res) {
     res.render('console/snippet');
 });
 

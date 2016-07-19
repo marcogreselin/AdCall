@@ -161,13 +161,17 @@ table
       width: 80%
       li
         text-align: left
+        list-style-type: none;
       label.error
         font-size: 10px
         margin-bottom: 0px
         margin-left: 17px
         margin-top: 3px
         display: block
-        position: absolute
+        position: relative!important
+        margin: 0
+        text-align: center
+        color: #880A6C
       .row
         margin-top: 7px
       input
@@ -176,6 +180,8 @@ table
         padding-left: 5px
         border-radius: 5px
         border: solid 1px $primary-color
+      input.error
+        border: solid 2px #880A6C
     h3
       text-align: center
     .highlight
@@ -204,7 +210,6 @@ table
     #country
       width: 100%!important
     .errorsbox
-      border: solid 3px #880A6C
       border-radius: 5px
       text-align: center
       margin: 0 auto

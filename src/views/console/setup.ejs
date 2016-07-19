@@ -29,8 +29,8 @@
         <h3>Are you the first user in your company?</h3>
         Then welcome! Let's register your company here. Just fill out the form below to become the admin of your company account.
 
-        <form id="company-registration">
-        <select name="companytype" id="companytype">
+        <form id="company-registration" action="" method="post">
+        <select name="companytype" id="companytype" class="required">
             <option selected disabled>Select your company type</option>
             <option value="1">Advertiser</option>
             <option value="2">Publisher</option>
@@ -70,7 +70,11 @@
 
 
 <script>
+
+
+
     $(document).ready(function () {
+
 
         $('#company-registration').validate({
             rules: {
@@ -85,26 +89,27 @@
                 },
                 city: {
                     required: true
+                },
+                country: {
+                    required: true
+                },
+                companytype: {
+                    required: true
                 }
             },
             messages: {
+                companytype: "Please select what kind of company you wish to register",
                 companyname: "Please enter your company name.",
                 address1: "Please enter your company address.",
                 postcode: "What is your postcode?",
-                city: "Wher's your company based?"
+                city: "Where's your company based?",
+                country: "Please select a country"
             },
 
 
             errorLabelContainer:".errorsbox",
             wrapper:"li"
-//            errorPlacement: function (error, element) {
-//                if(!$(".erorsbox")){
-//                    $(".last").append('<div class="errorsbox"></div>"')
-//                } else {
-//                    $(".errorsbox").append("<li>"+error+"</li>");
-//                }
-//
-//            }
+
         })
 
     });
