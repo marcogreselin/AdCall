@@ -16,6 +16,8 @@
     "express": "~4.13.4",
     "express-flash": "0.0.2",
     "express-session": "^1.14.0",
+    "fs-extra": "^0.30.0",
+    "jsdoc": "^3.4.0",
     "morgan": "~1.7.0",
     "node-sass-middleware": "0.8.0",
     "passport": "^0.3.2",

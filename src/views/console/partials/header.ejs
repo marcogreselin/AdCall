@@ -8,9 +8,14 @@
 
             <% if(locals.nav){ %>
                 <ul class="left">
-                    <% for(var i=0; i<locals.nav.length; i++) { %>
-                        <li><a href="<%= locals.nav[i].link %>"><%= locals.nav[i].text %></a></li>
-                    <% } %>
+                    <% for(var i=0; i<locals.nav.length; i++) {
+                         if(locals.originalUrl===locals.nav[i].link.substring(2)) { %>
+                           <li><a href="<%= locals.nav[i].link %>"><span class="selected"><%= locals.nav[i].text %></span></a></li>
+                      <% }
+                         else { %>
+                           <li><a href="<%= locals.nav[i].link %>"><%= locals.nav[i].text %></a></li>
+                        <% }
+                       } %>
                 </ul>
             <% } %>
 

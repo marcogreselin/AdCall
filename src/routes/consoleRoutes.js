@@ -30,15 +30,13 @@ var assignedUser = function() {
     };
 };
 
-// Menu for header
+/** Menu for header
+ *
+ */
 var nav = function() {
     return function(req,res,next) {
         res.nav = [];
         var advertisernav = [{
-                link: '../console/my-ads',
-                text: 'My Ads'
-            },
-            {
                 link: '../console/answer',
                 text: 'Answer Calls'
             }];
@@ -64,6 +62,14 @@ var nav = function() {
             // If the user is an admin of that account,
             // she should be able to add other users to that company.
             if(req.user.admin === true){
+                // If the user is an advertiser admin,
+                // she will be able to create and manager ads.
+                if(req.user.companytype === 1){
+                    res.locals.nav.push({
+                        link: '../console/campaigns',
+                        text: 'My Campaigns'
+                    });
+                }
                 res.locals.nav.push(adminnav);
             }
         }
@@ -71,7 +77,7 @@ var nav = function() {
     }
 };
 
-// Allows to send selected user data to response if logged in
+/** Allows to send selected user data to response if logged in.*/
 function userData(req, res, next)  {
     if(req.user && req.user.firstname){
         res.locals.userfirstname = req.user.firstname;
@@ -79,9 +85,18 @@ function userData(req, res, next)  {
     next();
 };
 
+/** Adding the route name so that it can be used in the header to underline
+ * current page.
+ */
+function routeName (req, res, next) {
+    res.locals.originalUrl = req.originalUrl;
+    next();
+}
+
 router.use(userData);
 router.use(nav());
 router.use(assignedUser());
+router.use(routeName);
 
 var restrictTo = function (companyType) {
     return function (req,res,next) {
@@ -132,8 +147,6 @@ router.route('/setup')
                     if(err)
                         console.log(err.toString());
                     // Now that the companyid has been added we should add it to the user object
-                    // console.log(JSON.stringify(result))
-                    // console.log(JSON.stringify(req.user))
                     req.user.companyid = result.rows[0].companyid;
                     req.user.companytype = result.rows[0].companytype;
                     res.redirect('/console');
@@ -142,17 +155,13 @@ router.route('/setup')
         })
     });
 
-// router.get('/analytics', function(req, res) {
-//     res.render('console/analytics');
-// });
-
 // console advertiser
 router.get('/answer', restrictTo('advertiser'), function(req, res) {
     res.render('console/answer');
 });
 
-router.get('/my-ads', restrictTo('advertiser'), function(req, res) {
-    res.render('console/my-ads');
+router.get('/campaigns', restrictTo('advertiser'), function(req, res) {
+    res.render('console/campaigns');
 });
 
 // console publisher
