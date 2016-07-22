@@ -2,6 +2,7 @@ $primary-color: black
 $logo-color: #E6FFF9
 $primary-font: FontAwesome, Helvetica, sans-serif
 $first-gradient: #880A6C
+$second-gradient: #0075A9
 
 @font-face
   font-family: 'FontAwesome'
@@ -157,6 +158,38 @@ button:hover.add-campaign
   background: $first-gradient
 button:focus.add-campaign
   outline: none!important
+#campaign-wizard
+  #title.valid
+    text-align: center
+    margin-left: auto
+    margin-right: auto
+  .fileinput-filename
+    width: 250px
+    text-align: center
+  .btn-file
+    margin-left: auto
+    margin-right: auto
+  .row.selectpreview
+    height: 180px
+    position: relative
+    .left
+      position: relative
+      top: 50%
+      transform: translateY(-50%)
+  label
+    margin: 0px
+  .error
+    color: $second-gradient
+  li
+    display: block
+    list-style-type: none
+    text-align: center
+  #preview
+    margin-top: 30px
+    display: block
+    height: 150px
+    position: relative
+    top: 50%
 .setup
   main
     width: 600px
@@ -288,5 +321,8 @@ button:focus.add-campaign
   .btn:active
     background: transparent
     border: solid 2px white
-
+  .btn:hover
+    background: white
+    border: solid 2px $first-gradient
+    color: $first-gradient
 

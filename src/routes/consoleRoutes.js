@@ -125,7 +125,7 @@ router.get('/', function(req, res) {
 });
 
 router.route('/setup')
-    .get(nav(), function(req, res) {
+    .get(function(req, res) {
         // This page should be accessible only if an agent has not been associated to a company.
         if(req.user.companyid != null){
             res.redirect('console/');
@@ -164,9 +164,39 @@ router.get('/answer', restrictTo('advertiser'), function(req, res) {
     res.render('console/answer');
 });
 
-router.get('/campaigns', restrictTo('advertiser'), function(req, res) {
-    res.render('console/campaigns');
-});
+router.route('/campaigns')
+    .get(restrictTo('advertiser'), function(req, res) {
+        pg.defaults.ssl = true;
+        pg.connect(process.env.DATABASE_URL, function(err, client) {
+            if (err) {
+                console.log('Connection issue when retrieving data: ' + JSON.stringify(err));
+            } else {
+                client.query(`SELECT * FROM campaign WHERE agentid = ${req.user.agentid};`,
+                    function (err, result) {
+                        if(err)
+                            console.log(err.toString());
+                        res.render('console/campaigns', result);
+                    });
+            }
+        })
+    })
+    .post(function (req, res) {
+        pg.defaults.ssl = true;
+        pg.connect(process.env.DATABASE_URL, function(err, client) {
+            if (err) {
+                console.log('Connection issue when retrieving data: ' + JSON.stringify(err));
+            } else {
+                client.query(`INSERT INTO campaign (agentid, title, image, impressions, fallback)
+                VALUES (${req.user.agentid}, '${req.body.title}', '${req.body.bannerurl}', '${req.body.impressions}', '${req.body.fallback}')`,
+                    function (err, result) {
+                        if(err)
+                            console.log(err.toString());
+                        // Now that the companyid has been added we should add it to the user object
+                        res.redirect('/console/campaigns');
+                    });
+            }
+        })
+    });
 
 // console publisher
 router.get('/snippet', restrictTo('publisher'), function(req, res) {
@@ -177,6 +207,6 @@ router.get('/agents', restrictTo('admin'), function (req, res) {
    res.render('console/agents') ;
 });
 
-require('../externalRoutes')
+require('./externalRoutes')(router);
 
 module.exports = router;

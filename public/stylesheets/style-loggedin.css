@@ -174,6 +174,45 @@ button:hover.add-campaign, .modal-body .btn:hover {
 button:focus.add-campaign, .modal-body .btn:focus {
   outline: none !important; }
 
+#campaign-wizard #title.valid {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto; }
+
+#campaign-wizard .fileinput-filename {
+  width: 250px;
+  text-align: center; }
+
+#campaign-wizard .btn-file {
+  margin-left: auto;
+  margin-right: auto; }
+
+#campaign-wizard .row.selectpreview {
+  height: 180px;
+  position: relative; }
+  #campaign-wizard .row.selectpreview .left {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); }
+
+#campaign-wizard label {
+  margin: 0px; }
+
+#campaign-wizard .error {
+  color: #0075A9; }
+
+#campaign-wizard li {
+  display: block;
+  list-style-type: none;
+  text-align: center; }
+
+#campaign-wizard #preview {
+  margin-top: 30px;
+  display: block;
+  height: 150px;
+  position: relative;
+  top: 50%; }
+
 .setup main {
   width: 600px;
   margin-left: auto;
@@ -305,5 +344,9 @@ button:focus.add-campaign, .modal-body .btn:focus {
   .modal-footer .btn:active {
     background: transparent;
     border: solid 2px white; }
+  .modal-footer .btn:hover {
+    background: white;
+    border: solid 2px #880A6C;
+    color: #880A6C; }
 
 /*# sourceMappingURL=style-loggedin.css.map */
