@@ -30,16 +30,16 @@
                 <th width="10%">Admin</th>
                 <th width="10%">Delete</th>
             </tr>
+            <% for(var i=0; i<locals.rows.length; i++) { %>
             <tr>
-                <td>Jill</td>
-                <td>Smith</td>
-                <td>50</td>
+                <td><%= locals.rows[i].firstname %></td>
+                <td><%= locals.rows[i].lastname %></td>
+                <td><%= locals.rows[i].email %></td>
+                <td><%= locals.rows[i].admin %></td>
+                <td>Delete Here</td>
+
             </tr>
-            <tr>
-                <td>Eve</td>
-                <td>Jackson</td>
-                <td>94</td>
-            </tr>
+            <% } %>
         </table>
     </div>
 </main>
@@ -68,6 +68,7 @@
                         <div class="col-sm-9">
                             Enter here below the email address they used to register on AdCall.
                             <input type="text" placeholder="e.g. example@example.com" id="email" name="email">
+                            <div id="emailnotfound"></div>
                         </div>
                     </div>
 
@@ -99,20 +100,20 @@
 
     $(document).ready(function() {
 
+
         $("#btn-save").click(function() {
             var email = $( "#email" ).val();
 
             $.ajax({    //create an ajax request to load_page.php
                 type: "POST",
                 url: "",
-                data: email,
+                data: {email: email},
                 success: function(response){
-                    $("#error").html(response);
-                },
-                error: function(xhr,status,error){
                     location.reload();
+                },
+                error: function(data){
+                    $("#emailnotfound").html("This email address is not registered with us!");
                 }
-
             });
         });
     });

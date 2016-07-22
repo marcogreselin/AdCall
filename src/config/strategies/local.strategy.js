@@ -10,7 +10,7 @@ module.exports = function(){
     },
         function(email, password, done){
             pg.defaults.ssl = true;
-            pg.connect(process.env.DATABASE_URL || `postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
+            pg.connect(`postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
                 `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
                 if (err){
                     console.log('Connection issue when logging in: ' + JSON.stringify(err));

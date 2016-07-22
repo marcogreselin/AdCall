@@ -392,4 +392,7 @@ button:focus.add-campaign, .modal-body .btn:focus {
 #agentmodal input {
   width: 300px; }
 
+#emailnotfound {
+  color: #880A6C; }
+
 /*# sourceMappingURL=style-loggedin.css.map */

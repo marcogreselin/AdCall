@@ -167,7 +167,8 @@ router.get('/answer', restrictTo('advertiser'), function(req, res) {
 router.route('/campaigns')
     .get(restrictTo('advertiser'), function(req, res) {
         pg.defaults.ssl = true;
-        pg.connect(process.env.DATABASE_URL, function(err, client) {
+        pg.connect(process.env.DATABASE_URL || `postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
+            `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
             if (err) {
                 console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
                 throw err;
@@ -183,7 +184,8 @@ router.route('/campaigns')
     })
     .post(function (req, res) {
         pg.defaults.ssl = true;
-        pg.connect(process.env.DATABASE_URL, function(err, client) {
+        pg.connect(`postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
+            `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
             if (err) {
                 console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
                 throw err;
@@ -207,25 +209,38 @@ router.get('/snippet', restrictTo('publisher'), function(req, res) {
 
 router.route('/agents')
     .get(restrictTo('admin'), function (req, res) {
-       res.render('console/agents') ;
-    })
-    .post(function(req, res){
         pg.defaults.ssl = true;
-        pg.connect(process.env.DATABASE_URL, function(err, client) {
+        pg.connect(process.env.DATABASE_URL || `postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
+            `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
             if (err) {
                 console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
                 throw err;
             } else {
-                client.query(`SELECT * FROM agent WHERE email=${req.body.email}';`, function(err,result){
-                    if(result.rows.length===1){
-                        client.query(`UPDATE agent SET  companyid=${req.user.companyid} WHERE email='${req.query.email}';`,
+                client.query(`SELECT * FROM agent WHERE companyid = (SELECT companyid FROM agent WHERE agentid=${req.user.agentid})`, function(err,result){
+                    res.render('console/agents', result);
+                });
+            }
+        });
+    })
+    .post(function(req, res){
+        pg.defaults.ssl = true;
+        pg.connect(process.env.DATABASE_URL || `postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
+            `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
+            if (err) {
+                console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
+                throw err;
+            } else {
+                client.query(`SELECT * FROM agent WHERE email='${req.body.email}';`, function(err,result){
+                    console.log('email looked up: ' +`'${req.body.email}'`);
+                    if(result.rows.length!=0){
+                        console.log(JSON.stringify(result));
+                        client.query(`UPDATE agent SET  companyid=${req.user.companyid} WHERE email='${req.body.email}';`,
                             function (err, result) {
                                 if(err)
                                     console.log(err.toString());
                                 else {
-                                    res.status(200);
+                                    res.status(200).send('All Good');
                                     console.log('here');
-
                                 }
                             });
                     } else {
