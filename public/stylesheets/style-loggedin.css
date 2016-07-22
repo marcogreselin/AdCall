@@ -271,13 +271,20 @@ button:focus.add-campaign, .modal-body .btn:focus {
   .modal-body input {
     border: 0px;
     border-bottom: 2px solid #880A6C;
-    width: 400px;
+    display: block;
     font-size: 20px;
     margin-bottom: 20px;
     padding-left: 5px;
-    margin-top: 20px;
+    margin-top: 10px;
     background: transparent;
     color: #880A6C; }
+  .modal-body input.campaign-title {
+    width: 400px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 30px; }
   .modal-body .btn {
     width: 200px; }
   .modal-body .fileinput-filename {
@@ -285,6 +292,9 @@ button:focus.add-campaign, .modal-body .btn:focus {
   .modal-body .btn.btn-default.btn-file {
     margin: 0px;
     margin-top: 20px; }
+  .modal-body p {
+    margin-top: 40px;
+    margin-bottom: 40px; }
 
 .modal-footer {
   background-color: #880A6C; }
@@ -292,8 +302,8 @@ button:focus.add-campaign, .modal-body .btn:focus {
     border: solid 2px white;
     color: white;
     background: transparent; }
-
-.modal-box {
-  border-radius: 5px; }
+  .modal-footer .btn:active {
+    background: transparent;
+    border: solid 2px white; }
 
 /*# sourceMappingURL=style-loggedin.css.map */

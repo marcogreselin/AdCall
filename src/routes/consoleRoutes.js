@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-var express = require('express');
 var app = express();
 
 // console routes
@@ -49,7 +48,7 @@ var nav = function() {
             text: 'Create Campaign'
         }];
         var adminnav = {
-            link: '../console/addagents',
+            link: '../console/agents',
             text: 'Add Agents'
         }
         if (req.user && req.user.companyid != null){
@@ -110,6 +109,11 @@ var restrictTo = function (companyType) {
         }
         if(_companyType === req.user.companytype){
             next();
+        } else if(companyType === 'admin') {
+            if(req.user.admin===true)
+                return next();
+            else
+                res.redirect('/console');
         } else {
             res.redirect('/console');
         }
@@ -168,5 +172,11 @@ router.get('/campaigns', restrictTo('advertiser'), function(req, res) {
 router.get('/snippet', restrictTo('publisher'), function(req, res) {
     res.render('console/snippet');
 });
+
+router.get('/agents', restrictTo('admin'), function (req, res) {
+   res.render('console/agents') ;
+});
+
+require('../externalRoutes')
 
 module.exports = router;

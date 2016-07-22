@@ -54,12 +54,10 @@
                     <input class="campaign-title" id="title" name="title" type="text" placeholder="Enter a title for this campaign"><br>
                     Now please select an image for your banners. <b>This needs to be squared.</b>
                     <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <span class="btn btn-default btn-file"><span class="fileinput-new">Select an image</span><span class="fileinput-exists">Change</span><input type="file" id="file-input"></span>
+                        <span class="btn btn-default btn-file"><span class="fileinput-new">Select an image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
                         <span class="fileinput-filename"></span>
                         <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">&nbsp;</a>
                     </div>
-                    <input type="hidden" id="avatar-url" name="banner-url" value="/images/default.png">
-                    <img id="preview" src="" height="50px">
 
                     <p>
                         How many impressions do you want for this campaign? <input type="text" placeholder="e.g. 1000">
@@ -138,57 +136,6 @@
         })
     });
 
-</script>
-
-<script>
-    // Uploading banner image: https://devcenter.heroku.com/articles/s3-upload-node
-
-    (() => {
-        document.getElementById("file-input").onchange = () => {
-            const files = document.getElementById('file-input').files;
-            const file = files[0];
-            if(file == null){
-                return alert('No file selected.');
-            } else {
-                getSignedRequest(file);
-
-            }
-        };
-    })();
-
-    function getSignedRequest(file){
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', `/sign-s3?file-name=${file.name}&file-type=${file.type}`);
-        xhr.onreadystatechange = () => {
-            if(xhr.readyState === 4){
-                if(xhr.status === 200){
-                    const response = JSON.parse(xhr.responseText);
-                    uploadFile(file, response.signedRequest, response.url);
-                }
-                else{
-                    alert('Could not get signed URL.');
-                }
-            }
-        };
-        xhr.send();
-    }
-
-    function uploadFile(file, signedRequest, url){
-        const xhr = new XMLHttpRequest();
-        xhr.open('PUT', signedRequest);
-        xhr.onreadystatechange = () => {
-            if(xhr.readyState === 4){
-                if(xhr.status === 200){
-                    document.getElementById('preview').src = url;
-                    document.getElementById('avatar-url').value = url;
-                }
-                else{
-                    alert('Could not upload file.');
-                }
-            }
-        };
-        xhr.send(file);
-    }
 </script>
 
 </body>
