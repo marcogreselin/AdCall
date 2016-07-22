@@ -79,7 +79,8 @@ var nav = function() {
 /** Allows to send selected user data to response if logged in.*/
 function userData(req, res, next)  {
     if(req.user && req.user.firstname){
-        res.locals.userfirstname = req.user.firstname;
+        res.locals.agentfirstname = req.user.firstname;
+        res.locals.agentid = req.user.agentid;
     }
     next();
 };
@@ -167,7 +168,7 @@ router.get('/answer', restrictTo('advertiser'), function(req, res) {
 router.route('/campaigns')
     .get(restrictTo('advertiser'), function(req, res) {
         pg.defaults.ssl = true;
-        pg.connect(process.env.DATABASE_URL || `postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
+        pg.connect(`postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
             `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
             if (err) {
                 console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
@@ -210,7 +211,7 @@ router.get('/snippet', restrictTo('publisher'), function(req, res) {
 router.route('/agents')
     .get(restrictTo('admin'), function (req, res) {
         pg.defaults.ssl = true;
-        pg.connect(process.env.DATABASE_URL || `postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
+        pg.connect(`postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
             `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
             if (err) {
                 console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
@@ -224,7 +225,7 @@ router.route('/agents')
     })
     .post(function(req, res){
         pg.defaults.ssl = true;
-        pg.connect(process.env.DATABASE_URL || `postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
+        pg.connect(`postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
             `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
             if (err) {
                 console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));

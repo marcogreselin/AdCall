@@ -36,7 +36,7 @@
                 <td><%= locals.rows[i].lastname %></td>
                 <td><%= locals.rows[i].email %></td>
                 <td><%= locals.rows[i].admin %></td>
-                <td>Delete Here</td>
+                <td><% if(locals.agentid!=locals.rows[i].agentid) { %>Delete Here<% } %></td>
 
             </tr>
             <% } %>
