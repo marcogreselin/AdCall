@@ -169,7 +169,8 @@ router.route('/campaigns')
         pg.defaults.ssl = true;
         pg.connect(process.env.DATABASE_URL, function(err, client) {
             if (err) {
-                console.log('Connection issue when retrieving data: ' + JSON.stringify(err));
+                console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
+                throw err;
             } else {
                 client.query(`SELECT * FROM campaign WHERE agentid = ${req.user.agentid};`,
                     function (err, result) {
@@ -184,7 +185,8 @@ router.route('/campaigns')
         pg.defaults.ssl = true;
         pg.connect(process.env.DATABASE_URL, function(err, client) {
             if (err) {
-                console.log('Connection issue when retrieving data: ' + JSON.stringify(err));
+                console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
+                throw err;
             } else {
                 client.query(`INSERT INTO campaign (agentid, title, image, impressions, fallback)
                 VALUES (${req.user.agentid}, '${req.body.title}', '${req.body.bannerurl}', '${req.body.impressions}', '${req.body.fallback}')`,
@@ -203,9 +205,39 @@ router.get('/snippet', restrictTo('publisher'), function(req, res) {
     res.render('console/snippet');
 });
 
-router.get('/agents', restrictTo('admin'), function (req, res) {
-   res.render('console/agents') ;
-});
+router.route('/agents')
+    .get(restrictTo('admin'), function (req, res) {
+       res.render('console/agents') ;
+    })
+    .post(function(req, res){
+        pg.defaults.ssl = true;
+        pg.connect(process.env.DATABASE_URL, function(err, client) {
+            if (err) {
+                console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
+                throw err;
+            } else {
+                client.query(`SELECT * FROM agent WHERE email=${req.body.email}';`, function(err,result){
+                    if(result.rows.length===1){
+                        client.query(`UPDATE agent SET  companyid=${req.user.companyid} WHERE email='${req.query.email}';`,
+                            function (err, result) {
+                                if(err)
+                                    console.log(err.toString());
+                                else {
+                                    res.status(200);
+                                    console.log('here');
+
+                                }
+                            });
+                    } else {
+                        console.log('user not found');
+                        res.status(500).send('Email not found!');
+
+                    }
+                });
+
+            }
+        })
+    });
 
 require('./externalRoutes')(router);
 

@@ -21,13 +21,13 @@
 
 <main>
     <div class="container">
-        <button class="add-campaign" data-toggle="modal" data-target="#myModal">Add a new Campaign</button>
+        <button class="add-campaign" data-toggle="modal" data-target="#agentmodal">Add a new Agent</button>
         <table style="width:100%">
             <tr>
-                <th width="20%">Image</th>
-                <th width="30%">Title</th>
-                <th width="30%">Statistics</th>
-                <th width="10%">Impressions</th>
+                <th width="20%">First Name</th>
+                <th width="30%">Last Name</th>
+                <th width="30%">Email</th>
+                <th width="10%">Admin</th>
                 <th width="10%">Delete</th>
             </tr>
             <tr>
@@ -46,30 +46,36 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="agentmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <form action="" method="post">
-                    <input class="campaign-title" id="title" name="title" type="text" placeholder="Enter a title for this campaign"><br>
-                    Now please select an image for your banners. <b>This needs to be squared.</b>
-                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <span class="btn btn-default btn-file"><span class="fileinput-new">Select an image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
-                        <span class="fileinput-filename"></span>
-                        <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">&nbsp;</a>
+                <form action="" method="post" id="agent-wizard">
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <img src="../images/one-circle.png" alt="First" width="100px">
+                        </div>
+                        <div class="col-sm-9">
+                            Make sure your users have registered on AdCall.
+                        </div>
                     </div>
 
-                    <p>
-                        How many impressions do you want for this campaign? <input type="text" placeholder="e.g. 1000">
-                    </p>
-                    <p>
-                        Enter here the fallback website: <input type="text" placeholder="e.g. http://example.com">
-                    </p>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <img src="../images/two-circle.png" alt="First" width="100px">
+                        </div>
+                        <div class="col-sm-9">
+                            Enter here below the email address they used to register on AdCall.
+                            <input type="text" placeholder="e.g. example@example.com" id="email" name="email">
+                        </div>
+                    </div>
+
                 </form>
             </div>
             <div class="modal-footer">
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="btn-save">Save changes</button>
             </div>
         </div>
     </div>
@@ -90,51 +96,63 @@
 
 <script>
 
-    $(document).ready(function () {
-//        from http://stackoverflow.com/questions/1260984/jquery-validate-less-than
-        $.validator.addMethod('lessThanEqual', function(value, element, param) {
-            return this.optional(element) || parseInt(value) <= parseInt($(param).val());
-        }, "The value {0} must be less than {1}");
 
-        $.validator.addMethod('moreThanEqual', function(value, element, param) {
-            return this.optional(element) || parseInt(value) >= parseInt($(param).val());
-        }, "The value {0} must be less than {1}");
-        // From http://stackoverflow.com/questions/280759/jquery-validate-how-to-add-a-rule-for-regular-expression-validation
-        $.validator.addMethod(
-                "regex",
-                function(value, element, regexp) {
-                    var re = new RegExp(regexp);
-                    return this.optional(element) || re.test(value);
-                },
-                "Please check your input."
-        );
+    $(document).ready(function() {
 
-        $('#company-registration').validate({
-            rules: {
-                title: {
-                    required: true
+        $("#btn-save").click(function() {
+            var email = $( "#email" ).val();
+
+            $.ajax({    //create an ajax request to load_page.php
+                type: "POST",
+                url: "",
+                data: email,
+                success: function(response){
+                    $("#error").html(response);
                 },
-                image: {
-                    required: true
-                },
-                impressions: {
-                    required: true,
-                    lessThanEqual: 100000,
-                    moreThanEqual: 1000
-                },
-                fallback: {
-                    regex: "/^(http(s?):\/\/)?(www\.)+[a-zA-Z0-9\.\-\_]+(\.[a-zA-Z]{2,3})+(\/[a-zA-Z0-9\_\-\s\.\/\?\%\#\&\=]*)?$/",
-                    required: true
+                error: function(xhr,status,error){
+                    location.reload();
                 }
-            },
-            messages: {
-                title: "Please type a title.",
-                image: "Please select an image.",
-                impressions: "Please select a number of impressions betwenn 1k and 100k.",
-                fallback: "Please enter a valid fallback website."
-            }
-        })
+
+            });
+        });
     });
+
+//    (() => {
+//        document.getElementById("email").onchange = () => {
+//
+//            const xhr = new XMLHttpRequest();
+//            xhr.open('GET', ``);
+//            xhr.onreadystatechange = () => {
+//                if(xhr.readyState === 4){
+//                    if(xhr.status === 200){
+//                        alert('user found')
+//                    }
+//                    else{
+//                        alert('User not found.');
+//                    }
+//                }
+//
+//        };
+//    };
+//
+//
+//
+//    function uploadFile(file, signedRequest, url){
+//        const xhr = new XMLHttpRequest();
+//        xhr.open('PUT', signedRequest);
+//        xhr.onreadystatechange = () => {
+//            if(xhr.readyState === 4){
+//                if(xhr.status === 200){
+//                    document.getElementById('preview').src = url;
+//                    document.getElementById('bannerurl').value = url;
+//                }
+//                else{
+//                    alert('Could not upload file.');
+//                }
+//            }
+//        };
+//        xhr.send(file);
+//    }
 
 </script>
 

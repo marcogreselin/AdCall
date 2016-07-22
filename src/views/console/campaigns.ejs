@@ -23,24 +23,36 @@
     <div class="container">
         <button class="add-campaign" data-toggle="modal" data-target="#myModal">Add a new Campaign</button>
 
+        <% if(locals.rows.length===0){ %>
+
+        <div class="no-content">
+            Create your first campaign!
+        </div>
+
+        <% } else { %>
+
         <table style="width:100%">
-            <tr>
-                <th width="20%">Image</th>
-                <th width="30%">Title</th>
-                <th width="30%">Statistics</th>
-                <th width="10%">Impressions</th>
-                <th width="10%">Delete</th>
-            </tr>
-            <% for(var i=0; i<locals.rows.length; i++) { %>
+            <tbody>
                 <tr>
-                    <td><img style="display:block; margin: 10px" width="100%"  src="<%= locals.rows[i].image %>"></td>
-                    <td><%= locals.rows[i].title %></td>
-                    <td>Stats here</td>
-                    <td><%= locals.rows[i].impressions %></td>
-                    <td>Delete Here</td>
-                <tr>
-            <% } %>
+                    <th width="20%">Image</th>
+                    <th width="30%">Title</th>
+                    <th width="30%">Statistics</th>
+                    <th width="10%">Impressions</th>
+                    <th width="10%">Delete</th>
+                </tr>
+                <% var i=0; while(i<locals.rows.length) { %>
+                    <tr>
+                        <td><img style="display:block; margin: 10px" width="80%"  src="<%= locals.rows[i].image %>"></td>
+                        <td><%= locals.rows[i].title %></td>
+                        <td>Stats here</td>
+                        <td><%= locals.rows[i].impressions %></td>
+                        <td>Delete Here</td>
+                    </tr>
+                <%  i++ } %>
+            </tbody>
+
         </table>
+        <% } %>
     </div>
 </main>
 
