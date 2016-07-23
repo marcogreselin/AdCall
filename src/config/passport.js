@@ -7,7 +7,7 @@ module.exports = function(app) {
 
     // This is called after req.login to store data to the session
     passport.serializeUser(function(user, done){
-        done(null, user.rows[0]);
+        done(null, user);
     });
 
     // This is called when req.user is invoked

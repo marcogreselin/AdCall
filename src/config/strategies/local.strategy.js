@@ -1,92 +1,70 @@
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
-var pg = require('pg');
 var bcrypt = require('bcrypt');
+var queries = require('../../db/queries');
+
 
 module.exports = function(){
     passport.use('local-login', new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password'
-    },
-        function(email, password, done){
-            pg.defaults.ssl = true;
-            pg.connect(`postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
-                `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
-                if (err){
-                    console.log('Connection issue when logging in: ' + JSON.stringify(err));
-                    return done(err);
-                } else {
-                    var query = client.query(`SELECT agentid, agent.companyid, companytype, admin, email, firstname, lastname, password, verified 
-                    FROM agent LEFT JOIN company ON agent.companyid = company.companyid
-                    WHERE email='${email}'`, function(err, result) {
-                        if(err || result.rows.length === 0 ) {
-                            console.log('Query issue when loggin in: '+ JSON.stringify(err));
-                            return done(null, false, {message: 'Check back your username and password.'});
+    }, function(email, password, done){
+            queries.passportLogin(email)
+                .then((result) => {
+                    const hashedPassword = result.password;
+                    const plainTextPassword = password;
+
+                    bcrypt.compare(plainTextPassword, hashedPassword, function(err, res) {
+                        if(err || res != true){
+                            return done(null, false, {message: 'Check back your username and password.', email: email});
                         }
-
-                        var user = result;
-                        const hashedPassword = user.rows[0].password;
-                        const plainTextPassword = password;
-
-                        bcrypt.compare(plainTextPassword, hashedPassword, function(err, res) {
-                             if(err || res != true){
-                                 return done(null, false, {message: 'Check back your username and password.', email: email});
-                             }
-                            console.log('ready to log user in ' + JSON.stringify(user));
-                            return done(null, user);
-                        });
-
+                        console.log('Ready to log in agent ' + JSON.stringify(result.email));
+                        console.log(JSON.stringify(result))
+                        return done(null, result);
                     });
-                    query.on('end', function(result) {
-                        client.end();
-                    })
-                }
-            });
-        }
-    ));
+                })
+                .catch((error) => {
+                    console.log(`Error when logging in user ${email} (multiple/none with this email): `+ error);
+                    return done(null, false, {message: 'Email or password wrong!'});
+                })
+
+    }));
 
     passport.use('local-signup', new LocalStrategy({
             usernameField: 'email',
             passwordField: 'password',
             passReqToCallback : true
-        },
-        function(req, email, password, done){
-            pg.defaults.ssl = true;
-            pg.connect(process.env.DATABASE_URL || `postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
-                `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
+        }, function(req, email, password, done){
+            const saltRounds = 10;
+            const plaintextPassword = req.body.password;
+            // Password Hashing
+            bcrypt.hash(plaintextPassword, saltRounds, function(err, hash) {
                 if (err){
-                    console.log("Error reaching DB when creating account " + err['detail']);
-                    done(err);
+                    console.log("Error when hashing password during registration. " + err);
+                    return done(err);
                 } else {
-                    const saltRounds = 10;
-                    const plaintextPassword = req.body.password;
-                    // Hash the password
-                    bcrypt.hash(plaintextPassword, saltRounds, function(err, hash) {
-                        if (err){
-                            console.log("Error when hashing password during registration. " + err);
-                            return done(err);
-                        } else {
-                            client.query(`INSERT INTO agent (admin, email, password, firstname, lastname)
-                            VALUES (false, '${req.body.email}', '${hash}', '${req.body.firstname}', '${req.body.lastname}');
-                            SELECT * FROM agent WHERE email = '${req.body.email}'`, function(err, result) {
-                                if(err) {
-                                    if (err.constraint) {
-                                        console.log(err);
-                                        return done(err);
-                                    } else {
-                                        console.log(err);
-                                        return done(err);
-                                    }
-                                } else {
-                                    // If the user is created correctly we will log her in using passport.
-                                    // Not needed when logging in.
-                                    return done(null, result);
-                                }
-                            });
-                        }
-                    });
+                    var userData = {
+                        email: req.body.email,
+                        hashedPassword: hash,
+                        firstName: req.body.firstname,
+                        lastName: req.body.firstname
+                    };
+                    queries.passportSignUp(userData)
+                        .then( (result)=>{
+                            return done(null, result);
+                        } )
+                        .catch( (error)=>{
+                            console.log(JSON.stringify(error));
+                            // In case of Email already registered.
+                            if (err.constraint) {
+                                return done(null, false, {message: 'This email address is already registered with us.'});
+                            } else {
+                                // Other errors.
+                                return done(null, result);
+                            }
+                        } )
                 }
-            });
+            })
         }
     ));
 };

@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../db/queries');
+var queries = require('../db/queries');
 
 
-// console routes
-
-// If not logged in redirect to root
+/**
+ * Redirect visitors who are not logged in and try to visit the Console.
+ */
 router.use(function (req, res, next) {
     if(typeof req.user === "undefined"){
         res.redirect('/');
@@ -14,10 +14,10 @@ router.use(function (req, res, next) {
     }
 });
 
-
-// Console Access Policies
-// If user is not assigned to a company redirect all request to console to setup page.
-// From http://stackoverflow.com/questions/15719116/verify-access-group-in-passport-js
+/**
+ * If user is not assigned to a company redirect all request to console to setup page.
+ * @returns {Function}
+ */
 var assignedUser = function() {
     return function(req, res, next) {
         if (req.user && req.user.companyid != null)
@@ -76,7 +76,9 @@ var nav = function() {
     }
 };
 
-/** Allows to send selected user data to response if logged in. */
+/**
+ * Allows to send selected user data to response if logged in.
+ */
 function userData(req, res, next)  {
     if(req.user && req.user.firstname){
         res.locals.agentfirstname = req.user.firstname;
@@ -85,7 +87,8 @@ function userData(req, res, next)  {
     next();
 };
 
-/** Adding the route name so that it can be used in the header to underline
+/**
+ *  Adding the route name so that it can be used in the header to underline
  *  current page.
  */
 function routeName (req, res, next) {
@@ -151,7 +154,7 @@ router.route('/setup')
             res.render('console/setup', {email: req.user.email})
         }
     })
-    .post(db.postSetup);
+    .post(queries.postSetup);
 
 /*
  * The following are interfaces for the Advertisers.
@@ -168,8 +171,8 @@ router.get('/answer', restrictTo('advertiser'), function(req, res) {
  * Advertisers can see, add and delete campaigns to their company.
  */
 router.route('/campaigns')
-    .get(restrictTo('advertiser'), db.getCampaigns)
-    .post(db.createCampaign);
+    .get(restrictTo('advertiser'), queries.getCampaigns)
+    .post(queries.createCampaign);
 
 /*
  * The following are interfaces for the Publishers.
@@ -191,8 +194,8 @@ router.get('/snippet', restrictTo('publisher'), function(req, res) {
  * Agents can be added to the Company by the Company Admins.
  */
 router.route('/agents')
-    .get(restrictTo('admin'), db.getAgents)
-    .post(db.createAgent);
+    .get(restrictTo('admin'), queries.getAgents)
+    .post(queries.createAgent);
 
 /**
  * External routes are added here. They include calls to services like S3.

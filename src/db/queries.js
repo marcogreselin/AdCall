@@ -4,7 +4,7 @@
 // More info on pg-promise on https://github.com/vitaly-t/pg-promise
 var pgp = require('pg-promise')();
 const url = require('url');
-const params = url.parse(process.env.DATABASE_URL);
+const params = url.parse(process.env.DATABASE_URL || `postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`);
 const auth = params.auth.split(':');
 const cn = {
     user: auth[0],
@@ -21,6 +21,30 @@ var db = pgp(cn);
  */
 module.exports = {
     /**
+     * Used by Passport to log in.
+     * @param email
+     * @returns {XPromise<any>|external:Promise|*}
+     * @see local.strategy
+     */
+    passportLogin: (email)=> {
+        return db.one(`SELECT agentid, agent.companyid, companytype, admin, email, firstname, lastname, password, verified 
+                FROM agent LEFT JOIN company ON agent.companyid = company.companyid
+                WHERE email='${email}'`);
+    },
+    /**
+     * Used by Passport to sign up.
+     * @param email
+     * @returns {XPromise<any>|external:Promise|*}
+     * @see local.strategy
+     * @todo Refactor so that there is only one query for each query.
+     */
+    passportSignUp: userData => {
+        return db.one(`INSERT INTO agent (admin, email, password, firstname, lastname)
+                       VALUES (false, '${userData.email}', '${userData.hashedPassword}', '${userData.firstName}', '${userData.lastName}');
+                       SELECT * FROM agent WHERE email = '${userData.email}'`);
+    },
+
+    /**
      * Used to associate a company to each user.
      * @todo Refactor so that there is only one query for each query.
      */
@@ -30,12 +54,12 @@ module.exports = {
                 '${req.body.postcode}', '${req.body.city}', '${req.body.country}', ${req.user.agentid});
                 UPDATE agent SET companyid=(SELECT companyid from company WHERE createdby = ${req.user.agentid}), admin=true WHERE agentid = ${req.user.agentid};
                 SELECT company.companyid, company.companytype FROM agent JOIN company ON company.companyid=agent.companyid WHERE agentid = ${req.user.agentid}`)
-            .then(function(result){
+            .then( result => {
                 req.user.companyid = result.rows[0].companyid;
                 req.user.companytype = result.rows[0].companytype;
                 res.redirect('/console');
             })
-            .catch(function(error) {
+            .catch( (error)=> {
                 console.log(`Error when getting set up from agent ${req.user.agentid}: ` + JSON.stringify(error));
             })
     },
@@ -46,12 +70,12 @@ module.exports = {
      */
     getCampaigns: function  (req, res) {
         db.any(`SELECT * FROM campaign WHERE agentid = ${req.user.agentid};`)
-            .then(function(data) {
-                res.locals.rows = data;
+            .then( result => {
+                res.locals.rows = result;
                 res.render('console/campaigns');
             })
-            .catch(function(err){
-                console.log(`Error when trying to query the list of campaigns for user ${req.user.agentid}: ` + err.toString());
+            .catch( (error)=> {
+                console.log(`Error when trying to query the list of campaigns for user ${req.user.agentid}: ` + error.toString());
                 res.redirect('/console/campaigns');
             })
     },
@@ -62,10 +86,10 @@ module.exports = {
     createCampaign: function (req, res) {
         db.none(`INSERT INTO campaign (agentid, title, image, impressions, fallback)
                 VALUES (${req.user.agentid}, '${req.body.title}', '${req.body.bannerurl}', '${req.body.impressions}', '${req.body.fallback}');`)
-            .then(function(){
+            .then( ()=> {
                 res.redirect('/console/campaigns');
             })
-            .catch(function(error){
+            .catch( (error)=> {
                 console.log(`Error when creating a campaign from agent ${req.user.agentid}. Error: ` + error.toString());
                 res.redirect('/console/campaigns');
             })
@@ -75,12 +99,12 @@ module.exports = {
      */
     getAgents: function(req, res) {
         db.any(`SELECT * FROM agent WHERE companyid = (SELECT companyid FROM agent WHERE agentid=${req.user.agentid})`)
-            .then(function(data) {
-                res.locals.rows = data;
+            .then( result => {
+                res.locals.rows = result;
                 res.render('console/agents');
             })
-            .catch(function(err){
-                console.log(`Error when trying to retrieve the list of campaigns for user ${req.user.agentid}: ` + err.toString());
+            .catch( (error)=> {
+                console.log(`Error when trying to retrieve the list of campaigns for user ${req.user.agentid}: ` + error.toString());
                 res.redirect('/console/agents');
             })
     },
@@ -91,19 +115,19 @@ module.exports = {
     createAgent: function(req, res) {
         db.one(`SELECT * FROM agent WHERE email='${req.body.email}' AND companyid IS NULL;`)
         // If returns one row, it means that the user exists  and it is not matched to any company.
-            .then(function(){
+            .then( ()=> {
                 db.none(`UPDATE agent SET  companyid=${req.user.companyid} WHERE email='${req.body.email}';`)
-                    .then(function(){
+                    .then( ()=> {
                         res.status(200).send();
                     })
                     // This fires if there's an error when changing the company from null to defined.
-                    .catch(function(error){
+                    .catch( (error)=> {
                         console.log(`Error when adding company to user ${req.body.email} from user ${req.user.agentid}: ` + JSON.stringify(error));
                         res.status(500).send();
                     })
             })
             // This is fired if the first query returns more than one row or there's a problem.
-            .catch(function(error){
+            .catch( (error)=>{
                 res.status(500).send('User is already matched to company: ' + error);
             })
     }
