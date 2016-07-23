@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var pg = require('pg');
-var app = express();
+var db = require('../db/queries');
+
 
 // console routes
 
@@ -121,71 +121,41 @@ var restrictTo = function (companyType) {
     }
 };
 
+/*
+ * Beginning of routes. The db object has all the queries.
+ */
+
 router.get('/', function(req, res) {
     res.render('console/');
 });
 
+/**
+ * The setup route is only visible if the user is not associated with a company.
+ * It is necessary to complete this form to move forward to the console.
+ * This applies to all kinds of agents.
+ */
 router.route('/setup')
     .get(function(req, res) {
-        // This page should be accessible only if an agent has not been associated to a company.
         if(req.user.companyid != null){
             res.redirect('console/');
         } else {
-            var email = req.user.email;
-            res.locals.email = email;
-            res.render('console/setup')
+            res.render('console/setup', {email: req.user.email})
         }
     })
-    .post(function(req, res) {
-        pg.defaults.ssl = true;
-        pg.connect(process.env.DATABASE_URL || `postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
-            `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
-            if (err) {
-                console.log('Connection issue when retrieving data: ' + JSON.stringify(err));
-            } else {
-                client.query(`INSERT INTO company (companyname, companytype, address1, address2, postcode, city, country, createdby)
-                VALUES ('${req.body.companyname}', ${req.body.companytype}, '${req.body.address1}', '${req.body.address2}', 
-                '${req.body.postcode}', '${req.body.city}', '${req.body.country}', ${req.user.agentid});
-                UPDATE agent SET companyid=(SELECT companyid from company WHERE createdby = ${req.user.agentid}), admin=true WHERE agentid = ${req.user.agentid};
-                SELECT company.companyid, company.companytype FROM agent JOIN company ON company.companyid=agent.companyid WHERE agentid = ${req.user.agentid}`,
-                function (err, result) {
-                    if(err)
-                        console.log(err.toString());
-                    // Now that the companyid has been added we should add it to the user object
-                    req.user.companyid = result.rows[0].companyid;
-                    req.user.companytype = result.rows[0].companytype;
-                    res.redirect('/console');
-                });
-            }
-        })
-    });
+    .post(db.postSetup);
 
-// console advertiser
+/*
+ * The following are interfaces for the Advertisers.
+ */
 router.get('/answer', restrictTo('advertiser'), function(req, res) {
     res.render('console/answer');
 });
 
+/**
+ * Advertisers can see, add and delete campaigns to their company.
+ */
 router.route('/campaigns')
-    .get(restrictTo('advertiser'), function(req, res) {
-        pg.defaults.ssl = true;
-        pg.connect(`postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
-            `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client, done) {
-            if (err) {
-                console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
-                throw err;
-            } else {
-                var query = client.query(`SELECT * FROM campaign WHERE agentid = ${req.user.agentid};`);
-                query.on('error', function(err){
-
-                });
-                query.on('end', function(result) {
-                    client.end();
-                    res.render('console/campaigns', result);
-                    res.end();
-                });
-            }
-        })
-    })
+    .get(restrictTo('advertiser'), db.getCampaigns)
     .post(function (req, res) {
         pg.defaults.ssl = true;
         pg.connect(`postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
@@ -211,7 +181,10 @@ router.get('/snippet', restrictTo('publisher'), function(req, res) {
     res.render('console/snippet');
 });
 
+
+
 router.route('/agents')
+
     .get(restrictTo('admin'), function (req, res) {
         pg.defaults.ssl = true;
         pg.connect(`postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
