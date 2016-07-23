@@ -26,7 +26,7 @@ module.exports = {
      * @returns {XPromise<any>|external:Promise|*}
      * @see local.strategy
      */
-    passportLogin: (email)=> {
+    passportLogin: email=> {
         return db.one(`SELECT agentid, agent.companyid, companytype, admin, email, firstname, lastname, password, verified 
                 FROM agent LEFT JOIN company ON agent.companyid = company.companyid
                 WHERE email='${email}'`);
@@ -81,7 +81,7 @@ module.exports = {
                 res.locals.rows = result;
                 res.render('console/campaigns');
             })
-            .catch( (error)=> {
+            .catch( error=> {
                 console.log(`Error when trying to query the list of campaigns for user ${req.user.agentid}: ` + error.toString());
                 res.redirect('/console/campaigns');
             })
@@ -96,7 +96,7 @@ module.exports = {
             .then( ()=> {
                 res.redirect('/console/campaigns');
             })
-            .catch( (error)=> {
+            .catch( error=> {
                 console.log(`Error when creating a campaign from agent ${req.user.agentid}. Error: ` + error.toString());
                 res.redirect('/console/campaigns');
             })
@@ -110,7 +110,7 @@ module.exports = {
                 res.locals.rows = result;
                 res.render('console/agents');
             })
-            .catch( (error)=> {
+            .catch( error=> {
                 console.log(`Error when trying to retrieve the list of campaigns for user ${req.user.agentid}: ` + error.toString());
                 res.redirect('/console/agents');
             })
@@ -128,13 +128,13 @@ module.exports = {
                         res.status(200).send();
                     })
                     // This fires if there's an error when changing the company from null to defined.
-                    .catch( (error)=> {
+                    .catch( error=> {
                         console.log(`Error when adding company to user ${req.body.email} from user ${req.user.agentid}: ` + JSON.stringify(error));
                         res.status(500).send();
                     })
             })
             // This is fired if the first query returns more than one row or there's a problem.
-            .catch( (error)=>{
+            .catch( error=>{
                 res.status(500).send('User is already matched to company: ' + error);
             })
     }
