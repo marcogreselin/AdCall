@@ -29,8 +29,8 @@ var assignedUser = function() {
     };
 };
 
-/** Menu for header
- *
+/**
+ *  Menu for header
  */
 var nav = function() {
     return function(req,res,next) {
@@ -76,7 +76,7 @@ var nav = function() {
     }
 };
 
-/** Allows to send selected user data to response if logged in.*/
+/** Allows to send selected user data to response if logged in. */
 function userData(req, res, next)  {
     if(req.user && req.user.firstname){
         res.locals.agentfirstname = req.user.firstname;
@@ -86,7 +86,7 @@ function userData(req, res, next)  {
 };
 
 /** Adding the route name so that it can be used in the header to underline
- * current page.
+ *  current page.
  */
 function routeName (req, res, next) {
     res.locals.originalUrl = req.originalUrl;
@@ -98,6 +98,12 @@ router.use(nav());
 router.use(assignedUser());
 router.use(routeName);
 
+/**
+ * Handy to restrict access of each route.
+ * @param companyType
+ * @returns {Function}
+ * @todo add support for parsing arrays of user types.
+ */
 var restrictTo = function (companyType) {
     return function (req,res,next) {
         var _companyType;
@@ -125,6 +131,9 @@ var restrictTo = function (companyType) {
  * Beginning of routes. The db object has all the queries.
  */
 
+/**
+ * The Console Home.
+ */
 router.get('/', function(req, res) {
     res.render('console/');
 });
@@ -147,6 +156,10 @@ router.route('/setup')
 /*
  * The following are interfaces for the Advertisers.
  */
+
+/**
+ * Used by Advertisers to answer calls.
+ */
 router.get('/answer', restrictTo('advertiser'), function(req, res) {
     res.render('console/answer');
 });
@@ -156,90 +169,34 @@ router.get('/answer', restrictTo('advertiser'), function(req, res) {
  */
 router.route('/campaigns')
     .get(restrictTo('advertiser'), db.getCampaigns)
-    .post(function (req, res) {
-        pg.defaults.ssl = true;
-        pg.connect(`postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
-            `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
-            if (err) {
-                console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
-                throw err;
-            } else {
-                client.query(`INSERT INTO campaign (agentid, title, image, impressions, fallback)
-                VALUES (${req.user.agentid}, '${req.body.title}', '${req.body.bannerurl}', '${req.body.impressions}', '${req.body.fallback}')`,
-                    function (err, result) {
-                        if(err)
-                            console.log(err.toString());
-                        // Now that the companyid has been added we should add it to the user object
-                        res.redirect('/console/campaigns');
-                    });
-            }
-        })
-    });
+    .post(db.createCampaign);
 
-// console publisher
+/*
+ * The following are interfaces for the Publishers.
+ */
+
+/**
+ * This snippet page is used by Advertisers to copy the HTML code into their pages.
+ */
 router.get('/snippet', restrictTo('publisher'), function(req, res) {
     res.render('console/snippet');
 });
 
 
+/*
+ * The following are interfaces for the Admins.
+ */
 
+/**
+ * Agents can be added to the Company by the Company Admins.
+ */
 router.route('/agents')
+    .get(restrictTo('admin'), db.getAgents)
+    .post(db.createAgent);
 
-    .get(restrictTo('admin'), function (req, res) {
-        pg.defaults.ssl = true;
-        pg.connect(`postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
-            `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
-            if (err) {
-                console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
-                throw err;
-            } else {
-                var query = client.query(`SELECT * FROM agent WHERE companyid = (SELECT companyid FROM agent WHERE agentid=${req.user.agentid})`)
-                query.on('error', function(error){
-                    console.log(error);
-                    res.end();
-                    client.end();
-                });
-                query.on('end', function(result){
-                    res.render('console/agents', result);
-                    res.end();
-                    client.end();
-                })
-            }
-
-        });
-    })
-    .post(function(req, res){
-        pg.defaults.ssl = true;
-        pg.connect(`postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
-            `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
-            if (err) {
-                console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
-                throw err;
-            } else {
-                client.query(`SELECT * FROM agent WHERE email='${req.body.email}' AND companyid IS NULL;`, function(err,result){
-                    console.log('email looked up: ' +`'${req.body.email}'`);
-                    if(result.rows.length!=0){
-                        console.log(JSON.stringify(result));
-                        client.query(`UPDATE agent SET  companyid=${req.user.companyid} WHERE email='${req.body.email}';`,
-                            function (err, result) {
-                                if(err)
-                                    console.log(err.toString());
-                                else {
-                                    res.status(200).send('All Good');
-                                    console.log('here');
-                                }
-                            });
-                    } else {
-                        console.log('user not found');
-                        res.status(500).send('Email not found!');
-
-                    }
-                });
-
-            }
-        })
-    });
-
+/**
+ * External routes are added here. They include calls to services like S3.
+ */
 require('./externalRoutes')(router);
 
 module.exports = router;
