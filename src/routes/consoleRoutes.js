@@ -169,17 +169,20 @@ router.route('/campaigns')
     .get(restrictTo('advertiser'), function(req, res) {
         pg.defaults.ssl = true;
         pg.connect(`postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.`+
-            `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client) {
+            `eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`, function(err, client, done) {
             if (err) {
                 console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
                 throw err;
             } else {
-                client.query(`SELECT * FROM campaign WHERE agentid = ${req.user.agentid};`,
-                    function (err, result) {
-                        if(err)
-                            console.log(err.toString());
-                        res.render('console/campaigns', result);
-                    });
+                var query = client.query(`SELECT * FROM campaign WHERE agentid = ${req.user.agentid};`);
+                query.on('error', function(err){
+
+                });
+                query.on('end', function(result) {
+                    client.end();
+                    res.render('console/campaigns', result);
+                    res.end();
+                });
             }
         })
     })
@@ -217,10 +220,19 @@ router.route('/agents')
                 console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
                 throw err;
             } else {
-                client.query(`SELECT * FROM agent WHERE companyid = (SELECT companyid FROM agent WHERE agentid=${req.user.agentid})`, function(err,result){
-                    res.render('console/agents', result);
+                var query = client.query(`SELECT * FROM agent WHERE companyid = (SELECT companyid FROM agent WHERE agentid=${req.user.agentid})`)
+                query.on('error', function(error){
+                    console.log(error);
+                    res.end();
+                    client.end();
                 });
+                query.on('end', function(result){
+                    res.render('console/agents', result);
+                    res.end();
+                    client.end();
+                })
             }
+
         });
     })
     .post(function(req, res){
@@ -231,7 +243,7 @@ router.route('/agents')
                 console.log('Connection issue when retrieving data, error will be thrown: ' + JSON.stringify(err));
                 throw err;
             } else {
-                client.query(`SELECT * FROM agent WHERE email='${req.body.email}';`, function(err,result){
+                client.query(`SELECT * FROM agent WHERE email='${req.body.email}' AND companyid IS NULL;`, function(err,result){
                     console.log('email looked up: ' +`'${req.body.email}'`);
                     if(result.rows.length!=0){
                         console.log(JSON.stringify(result));

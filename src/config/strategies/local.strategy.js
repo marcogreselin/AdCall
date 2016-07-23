@@ -16,7 +16,7 @@ module.exports = function(){
                     console.log('Connection issue when logging in: ' + JSON.stringify(err));
                     return done(err);
                 } else {
-                    client.query(`SELECT agentid, agent.companyid, companytype, admin, email, firstname, lastname, password, verified 
+                    var query = client.query(`SELECT agentid, agent.companyid, companytype, admin, email, firstname, lastname, password, verified 
                     FROM agent LEFT JOIN company ON agent.companyid = company.companyid
                     WHERE email='${email}'`, function(err, result) {
                         if(err || result.rows.length === 0 ) {
@@ -37,6 +37,9 @@ module.exports = function(){
                         });
 
                     });
+                    query.on('end', function(result) {
+                        client.end();
+                    })
                 }
             });
         }
