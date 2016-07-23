@@ -22,10 +22,10 @@ a:hover {
   border-bottom: 2px solid; }
 
 input:active {
-  outline: none !important; }
+  outline: none; }
 
 input:focus {
-  outline: none !important; }
+  outline: none; }
 
 img {
   user-drag: none;
@@ -336,7 +336,8 @@ button:focus.add-campaign, .modal-body .btn:focus {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    font-size: 30px; }
+    font-size: 30px;
+    display: block; }
   .modal-body .btn {
     width: 200px; }
   .modal-body .fileinput-filename {
