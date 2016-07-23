@@ -46,21 +46,28 @@ module.exports = {
 
     /**
      * Used to associate a company to each user.
-     * @todo Refactor so that there is only one query for each query.
      */
     postSetup: function (req, res) {
-        db.one(`INSERT INTO company (companyname, companytype, address1, address2, postcode, city, country, createdby)
+        db.task(t=> {
+            return t.none(`INSERT INTO company (companyname, companytype, address1, address2, postcode, city, country, createdby)
                 VALUES ('${req.body.companyname}', ${req.body.companytype}, '${req.body.address1}', '${req.body.address2}', 
-                '${req.body.postcode}', '${req.body.city}', '${req.body.country}', ${req.user.agentid});
-                UPDATE agent SET companyid=(SELECT companyid from company WHERE createdby = ${req.user.agentid}), admin=true WHERE agentid = ${req.user.agentid};
-                SELECT company.companyid, company.companytype FROM agent JOIN company ON company.companyid=agent.companyid WHERE agentid = ${req.user.agentid}`)
+                '${req.body.postcode}', '${req.body.city}', '${req.body.country}', ${req.user.agentid});`)
+                .then(() => {
+                    return t.any(`UPDATE agent SET companyid=(SELECT companyid from company WHERE createdby = ${req.user.agentid}), admin=true WHERE agentid = ${req.user.agentid};`)
+                })
+                .then(() => {
+                    return t.one(`SELECT company.companyid, company.companytype, agent.admin FROM agent JOIN company ON company.companyid=agent.companyid WHERE agentid = ${req.user.agentid};`)
+                })
+        })
             .then( result => {
-                req.user.companyid = result.rows[0].companyid;
-                req.user.companytype = result.rows[0].companytype;
+                req.user.companyid = result.companyid;
+                req.user.companytype = result.companytype;
+                req.user.admin = result.admin;
                 res.redirect('/console');
             })
             .catch( (error)=> {
-                console.log(`Error when getting set up from agent ${req.user.agentid}: ` + JSON.stringify(error));
+                console.log(`Error when getting set up from agent ${req.user.agentid}: ` + error);
+                res.redirect('/console');
             })
     },
     /**

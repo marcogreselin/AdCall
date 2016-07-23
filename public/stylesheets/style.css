@@ -142,17 +142,13 @@ footer {
     margin-left: auto;
     margin-right: auto; }
 
-.signup-page select {
-  background-color: white;
-  border: 7px solid white;
-  border-radius: 4px;
-  color: black;
-  margin-left: 10px; }
-
 .registration-page {
   font-size: 1.2rem;
   padding: 20px;
   text-align: center; }
+  .registration-page .err {
+    color: #F2E278;
+    font-size: 13px; }
   .registration-page label.error {
     font-size: 10px;
     margin-bottom: 0px;
