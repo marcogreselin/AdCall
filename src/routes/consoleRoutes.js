@@ -171,7 +171,7 @@ router.get('/answer', restrictTo('advertiser'), function(req, res) {
  * Advertisers can see, add and delete campaigns to their company.
  */
 router.route('/campaigns')
-    .get(restrictTo('advertiser'), queries.getCampaigns)
+    .get(restrictTo('advertiser'), restrictTo('admin'), queries.getCampaigns)
     .post(queries.createCampaign);
 
 /*

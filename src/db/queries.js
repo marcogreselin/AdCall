@@ -4,7 +4,7 @@
 // More info on pg-promise on https://github.com/vitaly-t/pg-promise
 var pgp = require('pg-promise')();
 const url = require('url');
-const params = url.parse(process.env.DATABASE_URL || `postgres://ugeiskcgfndzuy:2mReS0WnS_ob7pWjEkndIyrPDl@ec2-54-247-185-241.eu-west-1.compute.amazonaws.com:5432/ddm2it63dsusah`);
+const params = url.parse(process.env.DATABASE_URL);
 const auth = params.auth.split(':');
 const cn = {
     user: auth[0],
@@ -69,7 +69,7 @@ module.exports = {
      * @param res
      */
     getCampaigns: function  (req, res) {
-        db.any(`SELECT * FROM campaign WHERE agentid = ${req.user.agentid};`)
+        db.any(`SELECT * FROM campaign WHERE agentid IN (SELECT agentid FROM agent WHERE companyid = ${req.user.companyid});`)
             .then( result => {
                 res.locals.rows = result;
                 res.render('console/campaigns');

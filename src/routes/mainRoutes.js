@@ -27,7 +27,7 @@ router.get('/login', function(req, res, next) {
 // GET signup page.
 router.route('/signup')
 .get(function(req, res, next) {
-  res.render('signup')
+  res.render('signup', {message: req.flash('error')})
 });
 
 // GET login page.

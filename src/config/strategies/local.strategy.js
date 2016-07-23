@@ -5,6 +5,11 @@ var queries = require('../../db/queries');
 
 
 module.exports = function(){
+    /**
+     * Defines local-login which is used in Passport. Uses bycrypt for the hashing.
+     * @see passport
+     * @see queries
+     */
     passport.use('local-login', new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password'
@@ -29,7 +34,11 @@ module.exports = function(){
                 })
 
     }));
-
+    /**
+     * Defines local-signup which is used in Passport. Uses bycrypt for the hashing.
+     * @see passport
+     * @see queries
+     */
     passport.use('local-signup', new LocalStrategy({
             usernameField: 'email',
             passwordField: 'password',
@@ -54,13 +63,13 @@ module.exports = function(){
                             return done(null, result);
                         } )
                         .catch( (error)=>{
-                            console.log(JSON.stringify(error));
+                            console.log(`Error when signing up user ${userData.email}: `+JSON.stringify(error));
                             // In case of Email already registered.
-                            if (err.constraint) {
+                            if (error.constraint) {
                                 return done(null, false, {message: 'This email address is already registered with us.'});
                             } else {
                                 // Other errors.
-                                return done(null, result);
+                                return done(error);
                             }
                         } )
                 }
