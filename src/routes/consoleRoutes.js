@@ -172,7 +172,8 @@ router.get('/answer', restrictTo('advertiser'), function(req, res) {
  */
 router.route('/campaigns')
     .get(restrictTo('advertiser'), restrictTo('admin'), queries.getCampaigns)
-    .post(queries.createCampaign);
+    .post(restrictTo('advertiser'), restrictTo('admin'), queries.createCampaign);
+router.get('/campaigns/suspend', restrictTo('advertiser'), restrictTo('admin'), queries.suspendCampaign);
 
 /*
  * The following are interfaces for the Publishers.
@@ -195,7 +196,10 @@ router.get('/snippet', restrictTo('publisher'), function(req, res) {
  */
 router.route('/agents')
     .get(restrictTo('admin'), queries.getAgents)
-    .post(queries.createAgent);
+    .post(restrictTo('admin'), queries.createAgent);
+router.get('/agents/makeadmin', restrictTo('admin'), queries.makeAdmin);
+router.get('/agents/unmatchagent', restrictTo('admin'), queries.unmatchAgent);
+
 /**
  * External routes are added here. They include calls to services like S3.
  */

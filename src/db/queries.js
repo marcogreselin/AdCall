@@ -105,7 +105,7 @@ module.exports = {
      * Used to get the list of agents.
      */
     getAgents: function(req, res) {
-        db.any(`SELECT * FROM agent WHERE companyid = (SELECT companyid FROM agent WHERE agentid=${req.user.agentid})`)
+        db.any(`SELECT * FROM agent WHERE companyid = (SELECT companyid FROM agent WHERE agentid=${req.user.agentid}) ORDER BY admin DESC`)
             .then( result => {
                 res.locals.rows = result;
                 res.render('console/agents');
@@ -136,6 +136,39 @@ module.exports = {
             // This is fired if the first query returns more than one row or there's a problem.
             .catch( error => {
                 res.status(500).send('User is already matched to company: ' + error);
+            })
+    },
+    makeAdmin: function(req,res) {
+        db.none(`UPDATE agent SET admin=NOT admin WHERE agentid=${req.query.agentId};`)
+            .then( ()=> {
+                res.redirect("/console/agents");
+            })
+            .catch( error => {
+                console.log(`Error when changing admin status for ${req.query.agentId}: `+error);
+                res.redirect("/console/agents");
+            })
+    },
+    unmatchAgent: function(req,res) {
+        db.none(`UPDATE agent SET companyid=null WHERE agentid=${req.query.agentId};`)
+            .then( ()=> {
+                res.redirect("/console/agents");
+            })
+            .catch( error => {
+                console.log(`Error when unmatching user ${req.query.agentId}: `+error);
+                res.redirect("/console/agents");
+            })
+    },
+    suspendCampaign: function(req,res){
+        db.none(`UPDATE campaign SET suspended=NOT suspended WHERE campaignId=${req.query.campaignId};`)
+            .then( ()=> {
+                console.log('here')
+                res.redirect("/console/campaigns");
+            })
+            .catch( error => {
+                console.log('there')
+
+                console.log(`Error when (un)pausing campaign ${req.query.campaignId}: `+error);
+                res.redirect("/console/campaigns");
             })
     }
 };

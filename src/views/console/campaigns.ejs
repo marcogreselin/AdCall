@@ -44,7 +44,12 @@
                         <td><%= locals.rows[i].title %></td>
                         <td>Stats here</td>
                         <td><%= locals.rows[i].impressions %></td>
-                        <td><img id="admin-circle" src="../images/suspend.png" alt="Suspend"></td>
+                        <td><% if(locals.rows[i].suspended) { %>
+                                <a href="/console/campaigns/suspend?campaignId=<%= locals.rows[i].campaignid %>"><img id="admin-circle" src="../images/suspend.png" alt="Suspend"></a>
+                            <% } else { %>
+                                <a href="/console/campaigns/suspend?campaignId=<%= locals.rows[i].campaignid %>"><img id="admin-circle" src="../images/play.png" alt="Suspend"></a>
+                            <% }  %>
+                        </td>
                     </tr>
                 <%  i++ } %>
             </tbody>
