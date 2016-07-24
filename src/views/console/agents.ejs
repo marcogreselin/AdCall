@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Required meta tags always come first -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <% include partials/head.ejs %>
 
     <title>Create magic</title>
 
@@ -27,16 +24,21 @@
                 <th width="20%">First Name</th>
                 <th width="30%">Last Name</th>
                 <th width="30%">Email</th>
-                <th width="10%">Admin</th>
-                <th width="10%">Delete</th>
+                <th width="10%" class="text-center">Admin</th>
+                <th width="10%" class="text-center">Delete</th>
             </tr>
             <% for(var i=0; i<locals.rows.length; i++) { %>
             <tr>
                 <td><%= locals.rows[i].firstname %></td>
                 <td><%= locals.rows[i].lastname %></td>
                 <td><%= locals.rows[i].email %></td>
-                <td><%= locals.rows[i].admin %></td>
-                <td><% if(locals.agentid!=locals.rows[i].agentid) { %>Delete Here<% } %></td>
+                <td><% if(locals.rows[i].admin){ %>
+                    <a href="agents?makeadmin=<%= locals.rows[i].agentid %>"><img id="admin-circle" src="../images/admin.png" alt="Admin"></a>
+                    <% } else { %>
+                    <a href="agents?makeadmin=<%= locals.rows[i].agentid %>"><img id="admin-circle" src="../images/empty-circle.png" alt="Admin"></a>
+                    <% } %>
+                </td>
+                <td><% if(locals.agentid!=locals.rows[i].agentid) { %> <img id="admin-circle" src="../images/bin.png" alt=""> <% } %></td>
 
             </tr>
             <% } %>
@@ -50,7 +52,6 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <form action="" method="post" id="agent-wizard">
 
                     <div class="row">
                         <div class="col-sm-3">
@@ -72,7 +73,6 @@
                         </div>
                     </div>
 
-                </form>
             </div>
             <div class="modal-footer">
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
@@ -115,6 +115,13 @@
                     $("#emailnotfound").html("This email address is already associated or it is not registered with us!");
                 }
             });
+        });
+
+        // Triggers button if press enter.
+        $('#email').keypress(function(e){
+            if(e.which == 13){//Enter key pressed
+                $('#btn-save').click();//Trigger search button click event
+            }
         });
     });
 

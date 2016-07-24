@@ -148,9 +148,12 @@ table {
     border-top-left-radius: 5px; }
   table tr:first-child th:last-child {
     border-top-right-radius: 5px; }
+  table tr {
+    height: 40px; }
   table tr td {
     border-right: 1px solid #880A6C;
-    border-bottom: 1px solid #880A6C; }
+    border-bottom: 1px solid #880A6C;
+    min-height: 40px; }
   table tr:last-child td {
     border-bottom: 2px solid #880A6C !important; }
   table tr td:first-child {
@@ -160,12 +163,18 @@ table {
   table td:last-child td:first-child {
     border-bottom-left-radius: 5px; }
   table td {
-    padding-left: 15px; }
+    padding-left: 15px;
+    padding-right: 15px; }
   table th {
     padding: 8px;
     font-size: 20px;
     background: #880A6C;
     color: white; }
+  table #admin-circle {
+    height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block; }
 
 button:focus {
   outline: none !important; }
@@ -393,6 +402,13 @@ button:focus.add-campaign, .modal-body .btn:focus {
   width: 300px; }
 
 #emailnotfound {
-  color: #880A6C; }
+  color: #880A6C;
+  font-size: 0.8em; }
+
+input#email {
+  margin-bottom: 10px; }
+
+.text-center {
+  text-align: center; }
 
 /*# sourceMappingURL=style-loggedin.css.map */

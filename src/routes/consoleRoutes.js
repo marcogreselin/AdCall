@@ -196,7 +196,6 @@ router.get('/snippet', restrictTo('publisher'), function(req, res) {
 router.route('/agents')
     .get(restrictTo('admin'), queries.getAgents)
     .post(queries.createAgent);
-
 /**
  * External routes are added here. They include calls to services like S3.
  */

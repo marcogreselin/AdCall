@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Required meta tags always come first -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <% include partials/head.ejs %>
 
     <title>Create magic</title>
 
@@ -38,8 +35,8 @@
                     <th width="20%">Image</th>
                     <th width="30%">Title</th>
                     <th width="30%">Statistics</th>
-                    <th width="10%">Impressions</th>
-                    <th width="10%">Delete</th>
+                    <th width="10%" class="text-center">Impressions</th>
+                    <th width="10%" class="text-center">Suspend</th>
                 </tr>
                 <% var i=0; while(i<locals.rows.length) { %>
                     <tr>
@@ -47,7 +44,7 @@
                         <td><%= locals.rows[i].title %></td>
                         <td>Stats here</td>
                         <td><%= locals.rows[i].impressions %></td>
-                        <td>Delete Here</td>
+                        <td><img id="admin-circle" src="../images/suspend.png" alt="Suspend"></td>
                     </tr>
                 <%  i++ } %>
             </tbody>
