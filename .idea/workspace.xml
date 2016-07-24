@@ -3,20 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1f9efe3b-5661-48eb-955b-ae65bb434b70" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/style-loggedin.css" afterPath="$PROJECT_DIR$/public/stylesheets/style-loggedin.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/style-loggedin.css.map" afterPath="$PROJECT_DIR$/public/stylesheets/style-loggedin.css.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/style-loggedin.sass" afterPath="$PROJECT_DIR$/public/stylesheets/style-loggedin.sass" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/db/queries.js" afterPath="$PROJECT_DIR$/src/db/queries.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/routes/consoleRoutes.js" afterPath="$PROJECT_DIR$/src/routes/consoleRoutes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/console/agents.ejs" afterPath="$PROJECT_DIR$/src/views/console/agents.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/console/answer.ejs" afterPath="$PROJECT_DIR$/src/views/console/answer.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/console/campaigns.ejs" afterPath="$PROJECT_DIR$/src/views/console/campaigns.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/console/index.ejs" afterPath="$PROJECT_DIR$/src/views/console/index.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/console/setup.ejs" afterPath="$PROJECT_DIR$/src/views/console/setup.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/console/snippet.ejs" afterPath="$PROJECT_DIR$/src/views/console/snippet.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/index.ejs" afterPath="$PROJECT_DIR$/src/views/index.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/login.ejs" afterPath="$PROJECT_DIR$/src/views/login.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/signup.ejs" afterPath="$PROJECT_DIR$/src/views/signup.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/adblock.html" afterPath="$PROJECT_DIR$/public/adblock.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/console/partials/head.ejs" afterPath="$PROJECT_DIR$/src/views/console/partials/head.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/partials/head.ejs" afterPath="$PROJECT_DIR$/src/views/partials/head.ejs" />
     </list>
     <ignored path="AdCall.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,14 +58,54 @@
       <file leaf-file-name="head.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/partials/head.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="8" selection-end-column="9" />
+            <state relative-caret-position="75">
+              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/console/index.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="head.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/console/partials/head.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="adblock.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/adblock.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="561">
+              <caret line="100" column="103" selection-start-line="100" selection-start-column="103" selection-end-line="100" selection-end-column="103" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="error.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/error.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="408">
@@ -158,9 +187,9 @@
         <option value="$PROJECT_DIR$/src/views/signup.ejs" />
         <option value="$PROJECT_DIR$/src/views/index.ejs" />
         <option value="$PROJECT_DIR$/src/views/adblock.ejs" />
-        <option value="$PROJECT_DIR$/src/views/partials/head.ejs" />
         <option value="$PROJECT_DIR$/public/stylesheets/style.css" />
         <option value="$PROJECT_DIR$/src/views/console/partials/header.ejs" />
+        <option value="$PROJECT_DIR$/src/views/partials/head.ejs" />
         <option value="$PROJECT_DIR$/src/views/console/partials/head.ejs" />
         <option value="$PROJECT_DIR$/public/adblock.html" />
       </list>
@@ -551,12 +580,12 @@
       <workItem from="1468599773201" duration="13000" />
       <workItem from="1468599795957" duration="90958000" />
       <workItem from="1469218755117" duration="402000" />
-      <workItem from="1469220883231" duration="47182000" />
+      <workItem from="1469220883231" duration="48286000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="311805000" />
+    <option name="totallyTimeSpent" value="312909000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -839,14 +868,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/error.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/index.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="975">
@@ -859,14 +880,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="35" selection-start-line="0" selection-start-column="0" selection-end-line="78" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/partials/head.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="8" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -887,30 +900,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/adblock.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/console/partials/head.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="8" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/console/index.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-510">
-          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/console/partials/header.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -923,6 +912,46 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="110" column="27" selection-start-line="103" selection-start-column="4" selection-end-line="110" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/error.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/console/index.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/partials/head.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/console/partials/head.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/adblock.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="100" column="103" selection-start-line="100" selection-start-column="103" selection-end-line="100" selection-end-column="103" />
           <folding />
         </state>
       </provider>
