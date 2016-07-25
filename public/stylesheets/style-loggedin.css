@@ -126,7 +126,9 @@ h1 {
   color: white; }
 
 .answer-video {
-  height: 400px; }
+  height: 400px;
+  width: 400px;
+  overflow: hidden; }
 
 video {
   display: block;
