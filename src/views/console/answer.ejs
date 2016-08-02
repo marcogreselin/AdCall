@@ -15,18 +15,15 @@
 <main>
     <div class="container">
         <div class="row">
-
-            <div class="col-md-12">
-                <h1>Answer Calls</h1>
-
-
-
-                <div class="answer-video">
-                    <video autoplay="true" id="videoElement"></video>
-                </div>
-
+            <div class="col-md-4">
+                <video id="localVideo"></video>
+            </div>
+            <div class="col-md-8">
+                <button id="take-calls">Start taking calls</button>
 
             </div>
+
+
         </div>
     </div>
 
@@ -38,22 +35,24 @@
 
 <!-- jQuery first, then Bootstrap JS. -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+<script src="https://simplewebrtc.com/latest-v2.js"></script>
+
 <script>
-    var video = document.querySelector("#videoElement");
 
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+    var webrtc = new SimpleWebRTC({
+        // the id/element dom element that will hold "our" video
+        localVideoEl: 'localVideo',
+        // the id/element dom element that will hold remote videos
+        remoteVideosEl: 'remoteVideos',
+        // immediately ask for camera access
+        autoRequestMedia: true,
+        media: { video: true, audio: true }
+    });
 
-    if (navigator.getUserMedia) {
-        navigator.getUserMedia({video: true}, handleVideo, videoError);
-    }
-
-    function handleVideo(stream) {
-        video.src = window.URL.createObjectURL(stream);
-    }
-
-    function videoError(e) {
-        // do something
-    }
+    webrtc.on('readyToCall', function () {
+        // you can name it anything
+        webrtc.joinRoom('64');
+    });
 </script>
 </body>
 </html>

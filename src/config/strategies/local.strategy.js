@@ -21,7 +21,9 @@ module.exports = function(){
 
                     bcrypt.compare(plainTextPassword, hashedPassword, function(err, res) {
                         if(err || res != true){
-                            return done(null, false, {message: 'Check back your username and password.', email: email});
+                            return done(null, false, {
+                                message: 'Check back your username and password.'
+                            });
                         }
                         console.log('Ready to log in agent ' + JSON.stringify(result.email));
                         console.log(JSON.stringify(result))

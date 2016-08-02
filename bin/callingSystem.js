@@ -17,7 +17,7 @@ module.exports = function(server) {
         // console.log("client connected on server");
         // socket.on("disconnect", disconnectIO);
 
-        socket.on("typeit", function (nm) {
+        socket.on("request", function (advertiserCode) {
             console.log(nm);
             socket.broadcast.emit("newmessage", nm);
         })
