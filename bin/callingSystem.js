@@ -9,23 +9,15 @@ module.exports = function(server, app) {
         queries = require('../src/db/queries');
 
 
-    io.use(passportSocketIo.authorize({
-        key: 'connect.sid',
-        secret: 'buttery',
-        store: sessionStore,
-        cookieParser: cookieParser,
-        success:      onAuthorizeSuccess,
-        fail:         onAuthorizeFail
-    }));
-    // // console.log(sessionStore)
-    // function onAuthorizeSuccess(){
-    //     console.log('yeah')
-    //     accept();
-    // }
-    // function onAuthorizeFail() {
-    //     console.log('no')
-    // }
-    
+    // io.use(passportSocketIo.authorize({
+    //     key: 'connect.sid',
+    //     secret: 'buttery',
+    //     store: sessionStore,
+    //     cookieParser: cookieParser,
+    //     success:      onAuthorizeSuccess,
+    //     fail:         onAuthorizeFail
+    // }));
+
     function onAuthorizeSuccess(data, accept) {
         console.log('An agent connected'+JSON.stringify(data));
         accept();
@@ -36,6 +28,26 @@ module.exports = function(server, app) {
         accept(null, !error);
     }
 
+
+    function get_clients_by_room(roomId, namespace) {
+        io.of(namespace || "/").in(roomId).clients(function (error, clients) {
+            if (error) { throw error; }
+            // console.log(clients[0]); // => [Anw2LatarvGVVXEIAAAD]
+            // console.log(io.sockets.sockets[clients[0]]); //socket detail
+            return clients;
+        });
+    }
+    //then
+
+
+
+
+
+
+
+
+
+
     io.on('connection', function(socket){
         console.log('a user connected');
 
@@ -44,24 +56,10 @@ module.exports = function(server, app) {
         });
 
         socket.on("logon", function () {
-            console.log(socket.request.user.companyid)
-            socket.join(socket.request.user.companyid);
-            // console.log(io.nsps['/'].adapter.rooms[socket.request.user.companyid])
+            socket.join(51);
 
 
-            var currentRoom = io.nsps['/'].adapter.rooms[socket.request.user.companyid];
-            var currentUsersInRoom = currentRoom.sockets;
-            console.dir(currentUsersInRoom);
-
-
-
-            // console.log('Agent logged on: '+socket.request.user.agentid);
-            // console.log('Current namespaces: '+Object.keys(io.nsps));
-            // if(Object.keys(io.nsps).includes(socket.request.user.agentid)){
-            //     console.log('exist');
-            // } else {
-            //     console.log('does not exist')
-            // }
+            console.log(io.nsps['/'].adapter.rooms['51']);
         })
     });
 

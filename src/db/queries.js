@@ -161,14 +161,17 @@ module.exports = {
     suspendCampaign: function(req,res){
         db.none(`UPDATE campaign SET suspended=NOT suspended WHERE campaignId=${req.query.campaignId};`)
             .then( ()=> {
-                console.log('here')
                 res.redirect("/console/campaigns");
             })
             .catch( error => {
-                console.log('there')
-
                 console.log(`Error when (un)pausing campaign ${req.query.campaignId}: `+error);
                 res.redirect("/console/campaigns");
             })
+    },
+    serveBanner: function(req, res){
+        db.one(`SELECT image, fallback FROM campaign ORDER BY RANDOM() LIMIT 1;`)
+            .then( result => {
+                res.send(result)
+            } )
     }
 };

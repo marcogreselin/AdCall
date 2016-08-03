@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var basicAuth = require('basic-auth');
 var mainRoutes = require('./src/routes/mainRoutes');
 var consoleRoutes = require('./src/routes/consoleRoutes');
+var serveRoutes = require('./src/routes/serveRoutes');
 var authRoutes = require('./src/routes/authRoutes');
 var redisUrl = require('redis-url');
 var RedisStore = require('connect-redis')(session);
@@ -87,6 +88,7 @@ app.use(express.static(path.join(__dirname, 'public'), { defaultExtension: 'html
 app.use('/', mainRoutes);
 app.use('/console', consoleRoutes);
 app.use('/auth', authRoutes);
+app.use('/serve', serveRoutes);
 
 
 // catch 404 and forward to error handler
