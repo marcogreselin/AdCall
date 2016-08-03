@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var queries = require('../db/queries');
+var callingSystem = require('../../bin/callingSystem');
 
 
 /**
@@ -163,9 +164,13 @@ router.route('/setup')
 /**
  * Used by Advertisers to answer calls.
  */
-router.get('/answer', restrictTo('advertiser'), function(req, res) {
-    res.render('console/answer');
-});
+router.route('/answer')
+    .get(restrictTo('advertiser'), function(req, res) {
+        res.render('console/answer');
+    })
+    .post(restrictTo('advertiser'), function(req, res) {
+
+    });
 
 /**
  * Advertisers can see, add and delete campaigns to their company.

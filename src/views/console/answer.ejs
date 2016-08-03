@@ -26,7 +26,7 @@
 
         </div>
     </div>
-
+<%= JSON.stringify(locals) %>
 </main>
 
 <% include partials/footer.ejs %>
@@ -36,7 +36,11 @@
 <!-- jQuery first, then Bootstrap JS. -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
 <script src="https://simplewebrtc.com/latest-v2.js"></script>
-
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io();
+    socket.emit('logon');
+</script>
 <script>
 
     var webrtc = new SimpleWebRTC({

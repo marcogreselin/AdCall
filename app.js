@@ -10,7 +10,8 @@ var basicAuth = require('basic-auth');
 var mainRoutes = require('./src/routes/mainRoutes');
 var consoleRoutes = require('./src/routes/consoleRoutes');
 var authRoutes = require('./src/routes/authRoutes');
-// var vhost = require('vhost');
+var redisUrl = require('redis-url');
+var RedisStore = require('connect-redis')(session);
 var flash = require ('connect-flash');
 
 var app = express();
@@ -59,7 +60,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+// Sets up a session store with Redis
+app.sessionStore = new RedisStore({ client: redisUrl.connect(process.env.REDIS_URL) });
 app.use(session({
+  store: app.sessionStore,
   secret: 'buttery',
   resave: false,
   saveUninitialized: false
