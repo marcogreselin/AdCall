@@ -169,9 +169,18 @@ module.exports = {
             })
     },
     serveBanner: function(req, res){
-        db.one(`SELECT image, fallback FROM campaign ORDER BY RANDOM() LIMIT 1;`)
+        db.one(`SELECT image, fallback, campaignid FROM campaign ORDER BY RANDOM() LIMIT 1;`)
             .then( result => {
-                res.send(result)
+                db.none(`INSERT INTO impression (campaignid, publisherid) VALUES (${result.campaignid}, ${req.query.publisherId});`)
+                    .then( ()=> {
+                        res.send(result);
+                    } )
+                    .catch( error =>{
+                        console.log('Something went wrong when inserting an impression: '+error)
+                    } )
+            } )
+            .catch( error=>{
+                console.log('Something went wrong when retrieving an ad: '+error)
             } )
     }
 };
