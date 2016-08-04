@@ -89,7 +89,9 @@ app.use('/', mainRoutes);
 app.use('/console', consoleRoutes);
 app.use('/auth', authRoutes);
 app.use('/serve', serveRoutes);
-
+app.get('/demo', function (req, res) {
+  res.redirect('demo.html')
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
