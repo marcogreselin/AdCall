@@ -9,6 +9,9 @@ body {
   display: flex;
   flex-direction: column; }
 
+::selection {
+  background: #F2E278; }
+
 a {
   color: inherit; }
 

@@ -13,6 +13,9 @@ body
   font-family: $primary-font
   display: flex
   flex-direction: column
+::selection
+  background: $first-gradient
+  color: white
 a
   color: inherit
   .selected
@@ -348,9 +351,9 @@ button#take-calls
   border-radius: 5px
   padding: 10px
   color: white
-.localVideo
-  position: absolute
-  height: 100%
+.video-container
+  position: relative
+  width: 100%
 .modal-footer
   background-color: $first-gradient
 

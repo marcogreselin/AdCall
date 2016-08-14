@@ -9,6 +9,10 @@ body {
   display: flex;
   flex-direction: column; }
 
+::selection {
+  background: #880A6C;
+  color: white; }
+
 a {
   color: inherit; }
   a .selected {
@@ -370,9 +374,9 @@ button#take-calls {
   padding: 10px;
   color: white; }
 
-.localVideo {
-  position: absolute;
-  height: 100%; }
+.video-container {
+  position: relative;
+  width: 100%; }
 
 .modal-footer {
   background-color: #880A6C; }

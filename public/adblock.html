@@ -15,6 +15,7 @@
             background-color: #E9EBEE;
             color: black;
             font-family: FontAwesome, Helvetica, sans-serif;
+            background: linear-gradient(#0075a9, #880A6C) fixed;
             display: flex;
             flex-direction: column; }
 
@@ -26,9 +27,12 @@
         }
         img{
             position: relative;
+            margin-top: 60px;
+            margin-bottom: 60px;
         }
-        body.login-page{
+        body{
             color: white!important;
+            padding: 20px;
         }
         a {
             color: inherit;
@@ -66,9 +70,10 @@
             margin-right: auto;
             display: block;
             margin-top: 50px;
+            margin-bottom: 50px
         }
         .xcon{
-            margin-top: 100px;
+            /*margin-top: 100px;*/
             display: block;
             margin-left: auto;
             margin-right: auto;
@@ -83,8 +88,8 @@
         }
     </style>
 </head>
-<body class="login-page">
-<header>
+<body>
+
     <div class="xcon">
 
             <img id="special" class="logo"src="images/logo.png" onerror="this.src='../images/logo.png';">
@@ -94,18 +99,17 @@
     </div>
 
 
-<main class="xmain">
+<div class="xmain" style="margin-top: 20px!important; font-size: 1rem; margin-bottom: 20px!important; padding-bottom: 0px; text-align: justify">
 
     <p>We have noticed that your AdBlock is On. Didn't you know, AdBlock does not love AdCall.</p>
     <p>To offer you the best experience over here, just <a target="_blank" href="https://help.getadblock.com/support/solutions/articles/6000067131-how-do-i-whitelist-a-specific-youtube-channel-">whitelist</a> AdCall and then refresh.</p>
     <img class="nolove" src="images/no-love.png" alt="No Love" onerror="this.src='../images/no-love.png';">
-</main>
+</div>
 
 
 
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
 
-</header>
 </body>
 </html>

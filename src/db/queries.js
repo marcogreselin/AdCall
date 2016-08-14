@@ -169,7 +169,7 @@ module.exports = {
             })
     },
     serveBanner: function(req, res){
-        db.one(`SELECT image, fallback, campaignid FROM campaign ORDER BY RANDOM() LIMIT 1;`)
+        db.one(`SELECT image, fallback, campaignid FROM campaign WHERE suspended=false ORDER BY RANDOM() LIMIT 1;`)
             .then( result => {
                 db.none(`INSERT INTO impression (campaignid, publisherid) VALUES (${result.campaignid}, ${req.query.publisherId});`)
                     .then( ()=> {

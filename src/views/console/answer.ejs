@@ -16,7 +16,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <video id="localVideo"></video>
+                <div class="video-container">
+                    <video height="100" id="localVideo"></video>
+                </div>
             </div>
             <div class="col-md-8">
                 <button id="take-calls">Start taking calls</button>
@@ -26,7 +28,6 @@
 
         </div>
     </div>
-<%= JSON.stringify(locals) %>
 </main>
 
 <% include partials/footer.ejs %>
@@ -50,7 +51,7 @@
 //        remoteVideosEl: 'remoteVideos',
         // immediately ask for camera access
         autoRequestMedia: true,
-        media: { video: true, audio: true }
+        media: { video: true}
     });
 
     webrtc.on('readyToCall', function () {
