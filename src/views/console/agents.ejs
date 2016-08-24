@@ -27,27 +27,27 @@
                 <th width="10%" class="text-center">Admin</th>
                 <th width="10%" class="text-center">Delete</th>
             </tr>
-            <% for(var i=0; i<locals.rows.length; i++) { %>
-            <tr>
-                <td><%= locals.rows[i].firstname %></td>
-                <td><%= locals.rows[i].lastname %></td>
-                <td><%= locals.rows[i].email %></td>
-                <td><% if(locals.rows[i].admin) { %>
-                        <% if(locals.agentid!=locals.rows[i].agentid) { %>
-                            <a href="agents/makeadmin?agentId=<%= locals.rows[i].agentid %>"><img id="admin-circle" src="../images/admin.png" alt="Admin"></a>
-                        <% } else { %>
-                            <img id="admin-circle" src="../images/admin.png" alt="Admin">
-                        <% } %>
-                    <% } else { %>
-                    <a href="agents/makeadmin?agentId=<%= locals.rows[i].agentid %>"><img id="admin-circle" src="../images/empty-circle.png" alt="Admin"></a>
-                    <% } %>
-                </td>
-                <td><% if(locals.agentid!=locals.rows[i].agentid) { %>
-                        <a href="agents/unmatchagent?agentId=<%= locals.rows[i].agentid %>"> <img id="admin-circle" src="../images/bin.png" alt=""></a>
-                    <% } %></td>
-
-            </tr>
+<% for(var i=0; i<locals.rows.length; i++) { %>
+<tr>
+    <td><%= locals.rows[i].firstname %></td>
+    <td><%= locals.rows[i].lastname %></td>
+    <td><%= locals.rows[i].email %></td>
+    <td><% if(locals.rows[i].admin) { %>
+            <% if(locals.agentid!=locals.rows[i].agentid) { %>
+                <a href="agents/makeadmin?agentId=<%= locals.rows[i].agentid %>"><img id="admin-circle" src="../images/admin.png" alt="Admin"></a>
+            <% } else { %>
+                <img id="admin-circle" src="../images/admin.png" alt="Admin">
             <% } %>
+        <% } else { %>
+        <a href="agents/makeadmin?agentId=<%= locals.rows[i].agentid %>"><img id="admin-circle" src="../images/empty-circle.png" alt="Admin"></a>
+        <% } %>
+    </td>
+    <td><% if(locals.agentid!=locals.rows[i].agentid) { %>
+            <a href="agents/unmatchagent?agentId=<%= locals.rows[i].agentid %>"> <img id="admin-circle" src="../images/bin.png" alt=""></a>
+        <% } %></td>
+
+</tr>
+<% } %>
         </table>
     </div>
 </main>

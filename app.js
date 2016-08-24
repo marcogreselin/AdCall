@@ -62,7 +62,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 // Sets up a session store with Redis
-app.sessionStore = new RedisStore({ client: redisUrl.connect(process.env.REDIS_URL) });
+app.sessionStore = new RedisStore({
+  client: redisUrl.connect(process.env.REDIS_URL)
+});
 app.use(session({
   store: app.sessionStore,
   secret: 'buttery',
