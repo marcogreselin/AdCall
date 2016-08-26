@@ -17,9 +17,6 @@ var flash = require ('connect-flash');
 
 var app = express();
 
-// // redirect console users
-// app.use(vhost('console.adcall.io', require('./consoleApp').app));
-
 // view engine setup
 app.set('views', path.join(__dirname, '/src/views'));
 app.set('view engine', 'ejs');
