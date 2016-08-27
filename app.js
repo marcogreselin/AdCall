@@ -33,6 +33,7 @@ app.use(function(req, res, next) {
 });
 
 // app password protection
+// see: https://github.com/expressjs/basic-auth-connect
 var auth = function (req, res, next) {
   function unauthorized(res) {
     res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
@@ -51,7 +52,9 @@ var auth = function (req, res, next) {
     return unauthorized(res);
   };
 };
-app.use(auth);
+// Only use authentication when not in dev environment
+if (!(app.get('env') === 'development'))
+  app.use(auth);
 
 // various middleware
 app.use(logger('dev'));
