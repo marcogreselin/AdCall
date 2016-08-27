@@ -45,9 +45,9 @@
                         <td>Stats here</td>
                         <td><%= locals.rows[i].impressions %></td>
                         <td><% if(locals.rows[i].suspended) { %>
-                                <a href="/console/campaigns/suspend?campaignId=<%= locals.rows[i].campaignid %>"><img id="admin-circle" src="../images/suspend.png" alt="Suspend"></a>
+                                <a href="/console/campaigns/suspend?campaignId=<%= locals.rows[i].campaignid %>"><img id="admin-circle" src="../images/play.png" alt="Suspend"></a><br><div id="activesuspended">Currently Suspended</div>
                             <% } else { %>
-                                <a href="/console/campaigns/suspend?campaignId=<%= locals.rows[i].campaignid %>"><img id="admin-circle" src="../images/play.png" alt="Suspend"></a>
+                                <a href="/console/campaigns/suspend?campaignId=<%= locals.rows[i].campaignid %>"><img id="admin-circle" src="../images/suspend.png" alt="Suspend"></a><br><div id="activesuspended">Currently Active</div>
                             <% }  %>
                         </td>
                     </tr>

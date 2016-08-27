@@ -241,6 +241,10 @@ button:focus.add-campaign, .modal-body .btn:focus {
   position: relative;
   top: 50%; }
 
+#activesuspended {
+  text-align: center;
+  font-size: .8em; }
+
 .setup main {
   width: 600px;
   margin-left: auto;
