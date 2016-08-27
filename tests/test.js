@@ -1,9 +1,9 @@
-var expect = require('chai').expect;
+// var expect = require('chai').expect;
 var request = require('supertest');
 var app = require('../app');
 
-describe("an api endpoint", function() {
-    it("returns some sort of json", function(done) {
+describe("a route", function() {
+    it("is accessible", function(done) {
         request(app)
             .get("/")
             .expect(200, done);
