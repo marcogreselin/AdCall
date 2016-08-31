@@ -15,15 +15,12 @@
 <main>
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
                 <div class="video-container">
                     <video height="100" id="localVideo"></video>
                 </div>
-            </div>
-            <div class="col-md-8">
-                <button id="take-calls">Start taking calls</button>
-
-            </div>
+            <!--<div class="col-md-8">-->
+                <!--<button id="take-calls">Start taking calls</button>-->
+            <!--</div>-->
 
 
         </div>
@@ -37,11 +34,7 @@
 <!-- jQuery first, then Bootstrap JS. -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
 <script src="https://simplewebrtc.com/latest-v2.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    var socket = io();
-    socket.emit('logon');
-</script>
+
 <script>
 
     var webrtc = new SimpleWebRTC({
@@ -56,7 +49,7 @@
 
     webrtc.on('readyToCall', function () {
         // you can name it anything
-        webrtc.joinRoom('64');
+        webrtc.joinRoom("<%=companyid%>");
     });
 </script>
 </body>

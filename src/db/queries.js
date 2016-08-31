@@ -169,7 +169,9 @@ module.exports = {
             })
     },
     serveBanner: function(req, res){
-        db.one(`SELECT image, fallback, campaignid FROM campaign WHERE suspended=false ORDER BY RANDOM() LIMIT 1;`)
+        db.one(`SELECT image, fallback, campaignid, companyId FROM campaign 
+                JOIN agent ON agent.agentid=campaign.agentid 
+                WHERE suspended=false ORDER BY RANDOM() LIMIT 1;`)
             .then( result => {
                 db.none(`INSERT INTO impression (campaignid, publisherid) VALUES (${result.campaignid}, ${req.query.publisherId});`)
                     .then( ()=> {
@@ -181,6 +183,29 @@ module.exports = {
             } )
             .catch( error=>{
                 console.log('Something went wrong when retrieving an ad: '+error)
+            } )
+    },
+    publisherImpressionCount: function(req, res){
+        db.any(`SELECT TO_CHAR(createddate, 'DD-MM-YY') AS date, COUNT(*) FROM impression WHERE publisherid=${req.user.companyid} 
+                GROUP BY date ORDER BY date DESC LIMIT 7`)
+            .then( result => {
+                res.locals.impressionsData = result;
+                res.render('console/')
+            } )
+            .catch( error=>{
+                console.log('Something went wrong when retrieving the console data: '+error)
+            } )
+    },
+    advertiserImpressionCount: function(req, res){
+        db.any(`SELECT TO_CHAR(impression.createddate, 'DD-MM-YY') AS date, COUNT(*)
+        FROM impression JOIN campaign ON campaign.campaignid=impression.campaignid JOIN agent ON agent.agentid=campaign.agentid
+        WHERE companyid=${req.user.companyid} GROUP BY date ORDER BY date DESC LIMIT 7`)
+            .then( result => {
+                res.locals.impressionsData = result;
+                res.render('console/')
+            } )
+            .catch( error=>{
+                console.log('Something went wrong when retrieving the console data: '+error)
             } )
     }
 };

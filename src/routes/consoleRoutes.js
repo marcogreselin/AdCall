@@ -84,6 +84,7 @@ function userData(req, res, next)  {
     if(req.user && req.user.firstname){
         res.locals.agentfirstname = req.user.firstname;
         res.locals.agentid = req.user.agentid;
+        res.locals.companyid = req.user.companyid;
     }
     next();
 };
@@ -139,7 +140,12 @@ var restrictTo = function (companyType) {
  * The Console Home.
  */
 router.get('/', function(req, res) {
-    res.render('console/');
+    if(req.user.companytype===1)
+        queries.advertiserImpressionCount(req, res);
+    else if (req.user.companytype===2)
+        queries.publisherImpressionCount(req, res);
+    else
+    res.render('console/')
 });
 
 /**

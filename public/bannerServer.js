@@ -1,6 +1,9 @@
 /**
  * Created by marco on 03/08/2016.
  */
+// Variable passing as described in http://stackoverflow.com/questions/2190801/passing-parameters-to-javascript-files
+var this_js_script = $('script[src*=bannerServer]');
+var publisherId = this_js_script.attr('publisherId');
 
 $.ajax({
     url: '/serve/serveBanner',
@@ -9,7 +12,8 @@ $.ajax({
 });
 
 function success(data) {
-    $("#adcall").html("<img height='300px' width='300px' src=\""+data.image+"\">")
+    $("#adcall").html("<img height='300px' width='300px' src=\""+data.image+"\">");
+
     $("#adcall").click(function(){
         $("#adcall").html("<div height='300px' id=\"remoteVideo\"></div>");
 
@@ -20,8 +24,10 @@ function success(data) {
             media: { video: true, audio: true }
         });
 
+
+
         webrtc.on('readyToCall', function () {
-            console.log(webrtc.connection)
+            webrtc.joinRoom(data.companyid.toString());
         });
     })
 }

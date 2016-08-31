@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
     <style>
@@ -16,7 +15,6 @@
             height:100%;
             width: 100%;
             position: absolute;
-
         }
         body {
             background: linear-gradient(#FFFAA4, #4ED8FF) fixed;
@@ -49,7 +47,6 @@
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
 
-    <script src="https://simplewebrtc.com/latest-v2.js"></script>
 </head>
 <body>
     <div class="container">
@@ -65,12 +62,12 @@
                     mollit anim id est laborum.
                 </p>
                 <p>
-                <div id="adcall"></div>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-                <script>
-                    var publisherId=15;
-                </script>
-                <script src="bannerServer.js"></script>
+
+                    <div id="adcall"></div>
+                    <script src="https://simplewebrtc.com/latest-v2.js"></script>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+                    <script publisherId=32 src="bannerServer.js"></script>
+
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                     dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                     ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
@@ -105,10 +102,7 @@
 
 
 <script src="/socket.io/socket.io.js"></script>
-<script>
-//    var socket = io();
-//    socket.emit('incomingCall', 45);
-</script>
+
 
 
 
